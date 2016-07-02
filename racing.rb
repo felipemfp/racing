@@ -17,6 +17,14 @@ class Player
     @x, @y = x, y
   end
 
+  def get_score
+    @score
+  end
+
+  def set_score(s)
+    @score = s
+  end
+
   def accelerate
     @vel *= 1.025
   end
@@ -41,31 +49,32 @@ class Player
     end
   end
 
-  def collision(cars)
+  def collision?(cars)
     cars.each do |car|
       # if Gosu::distance(@x, @y, car.x, car.y) < 70
       if @x > car.x
         if @y > car.y
           if @x - car.x < 50 and @y - car.y < 110
-            close
+            return true
           end
         else
           if @x - car.x < 50 and car.y - @y < 110
-            close
+            return true
           end
         end
       else
         if car.y > @y
           if car.x - @x < 50 and car.y - @y < 110
-            close
+            return true
           end
         else
           if car.x - @x < 50 and @y - car.y < 110
-            close
+            return true
           end
         end
       end
     end
+    return false
   end
 
   def draw
@@ -139,7 +148,9 @@ class RacingWindow < Gosu::Window
   def initialize
     super 512, 512
     self.caption = "Racing by felipemfp"
-
+    @score_font = Gosu::Font.new(20)
+    @gameover = Gosu::Image.from_text(
+        self, 'GAME OVER', Gosu.default_font_name, 45)
 
     @last_millis = 0
     @cars_interval = 7500
@@ -159,44 +170,53 @@ class RacingWindow < Gosu::Window
       Gosu::Image.new('media/taxi.png'),
       Gosu::Image.new('media/police.png')]
     @cars = []
+
+    @alive = true
   end
 
   def update
-    if (Gosu::milliseconds - @last_millis > @cars_interval)
-      @cars << Car.new(@car_image[rand(@car_image.size)])
-      @last_millis = Gosu::milliseconds
-    end
-    if (Gosu::milliseconds / 1000 > @interval)
-      @road.accelerate
-      @player.accelerate
-      @cars.each { |car| car.accelerate }
-      if @cars_interval > 1500
-        @cars_interval -= 250
+    if @alive
+      if (Gosu::milliseconds - @last_millis > @cars_interval)
+        @cars << Car.new(@car_image[rand(@car_image.size)])
+        @last_millis = Gosu::milliseconds
       end
-      @interval *= 1.2
-    end
-    if Gosu::button_down? Gosu::KbLeft or Gosu::button_down? Gosu::GpLeft then
-      @player.move_left
-    elsif Gosu::button_down? Gosu::KbRight or Gosu::button_down? Gosu::GpRight then
-      @player.move_right
-    else
-      @player.reset_angle
-    end
-    @road.move
-    @cars.each { |car| car.move }
-    @cars.each do |car|
-      if car.y >= 512+140
-        car = nil
+      if (Gosu::milliseconds / 1000 > @interval)
+        @road.accelerate
+        @player.accelerate
+        @cars.each { |car| car.accelerate }
+        if @cars_interval > 1500
+          @cars_interval -= 250
+        end
+        @interval *= 1.2
       end
+      if Gosu::button_down? Gosu::KbLeft or Gosu::button_down? Gosu::GpLeft then
+        @player.move_left
+      elsif Gosu::button_down? Gosu::KbRight or Gosu::button_down? Gosu::GpRight then
+        @player.move_right
+      else
+        @player.reset_angle
+      end
+      @road.move
+      @cars.each { |car| car.move }
+      @cars.each do |car|
+        if car.y >= 512+140
+          car = nil
+        end
+      end
+      @cars = @cars.compact
+      @alive = !@player.collision?(@cars)
+      @player.set_score(Gosu::milliseconds/226)
     end
-    @cars = @cars.compact
-    @player.collision(@cars)
   end
 
   def draw
     @player.draw
     @road.draw
     @cars.each { |car| car.draw }
+    @score_font.draw("Score: #{@player.get_score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    if !@alive
+      @gameover.draw_rot(512/2, 512/2, ZOrder::UI, 0.0)
+    end
   end
 
   def button_down(id)
