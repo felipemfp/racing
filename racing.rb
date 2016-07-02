@@ -172,6 +172,11 @@ class RacingWindow < Gosu::Window
     @cars = []
 
     @alive = true
+
+    @car_brake = Gosu::Sample.new("media/car-brake.wav")
+    @car_speed = Gosu::Song.new("media/car-speed.wav")
+
+    @car_speed.play(true)
   end
 
   def update
@@ -204,7 +209,11 @@ class RacingWindow < Gosu::Window
         end
       end
       @cars = @cars.compact
-      @alive = !@player.collision?(@cars)
+      if @player.collision?(@cars)
+        @car_brake.play
+        @car_speed.stop
+        @alive = false
+      end
       @player.set_score(Gosu::milliseconds/226)
     end
   end
