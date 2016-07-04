@@ -1,152 +1,17 @@
 require 'gosu'
+load 'player.rb'
+load 'car.rb'
+load 'road.rb'
+
+WIDTH, HEIGHT = 512, 512
 
 module ZOrder
   Background, Cars, Player, UI = *0..3
 end
 
-
-class Player
-  def initialize
-    @image= Gosu::Image.new('media/car.png')
-    @x, @y, @angle = 0.0
-    @score = 0
-    @vel = 1.0
-  end
-
-  def warp(x, y)
-    @x, @y = x, y
-  end
-
-  def get_score
-    @score
-  end
-
-  def set_score(s)
-    @score = s
-  end
-
-  def accelerate
-    @vel *= 1.025
-  end
-
-  def reset_angle
-    @angle = 0.0
-  end
-
-  def move_left
-    @angle = -5.0
-    @x -= @vel
-    if @x <= 175.0
-      @x = 175.0
-    end
-  end
-
-  def move_right
-    @angle = 5.0
-    @x += @vel
-    if @x >= 335.0
-      @x = 335.0
-    end
-  end
-
-  def collision?(cars)
-    cars.each do |car|
-      # if Gosu::distance(@x, @y, car.x, car.y) < 70
-      if @x > car.x
-        if @y > car.y
-          if @x - car.x < 50 and @y - car.y < 110
-            return true
-          end
-        else
-          if @x - car.x < 50 and car.y - @y < 110
-            return true
-          end
-        end
-      else
-        if car.y > @y
-          if car.x - @x < 50 and car.y - @y < 110
-            return true
-          end
-        else
-          if car.x - @x < 50 and @y - car.y < 110
-            return true
-          end
-        end
-      end
-    end
-    return false
-  end
-
-  def draw
-    @image.draw_rot(@x, @y, ZOrder::Player, @angle)
-  end
-end
-
-
-class Car
-  attr_reader :x, :y
-
-  def initialize (image)
-    pos = [180.0, 255.0, 330.0]
-    @image= image
-    @x, @y = pos[rand(pos.size)], rand(100.0..170.0) * -1
-    @angle = 0.0
-    @vel = 2.5
-  end
-
-  def warp(x, y)
-    @x, @y = x, y
-  end
-
-  def accelerate
-    @vel *= 1.05
-  end
-
-  def move
-    @y += @vel
-  end
-
-  def draw
-    @image.draw_rot(@x, @y, ZOrder::Cars, @angle)
-  end
-end
-
-
-
-class Road
-  def initialize
-    @image_a = Gosu::Image.new('media/background.png', :tileable => true)
-    @image_b = Gosu::Image.new('media/background.png', :tileable => true)
-    @xa = @ya = @xb = 0.0
-    @yb = -512.0
-    @vel = 5.0
-  end
-
-  def accelerate
-    @vel *= 1.04
-  end
-
-  def move
-    @ya += @vel
-    @yb += @vel
-    if @ya >= 512
-      @ya -= 512 * 2
-    end
-    if @yb >= 512
-      @yb -= 512 * 2
-    end
-  end
-
-  def draw
-    @image_a.draw(@xa, @ya, ZOrder::Background)
-    @image_b.draw(@xb, @yb, ZOrder::Background)
-  end
-end
-
-
 class RacingWindow < Gosu::Window
   def initialize
-    super 512, 512
+    super WIDTH, HEIGHT
     self.caption = "Racing by felipemfp"
     @score_font = Gosu::Font.new(20)
     @gameover = Gosu::Image.from_text(
@@ -160,7 +25,7 @@ class RacingWindow < Gosu::Window
     @road = Road.new
 
     @player = Player.new
-    @player.warp(512/2, 512-90)
+    @player.warp(WIDTH/2, HEIGHT-90)
 
     @car_image = [Gosu::Image.new('media/ambulance.png'),
       Gosu::Image.new('media/audi.png'),
@@ -222,9 +87,9 @@ class RacingWindow < Gosu::Window
     @player.draw
     @road.draw
     @cars.each { |car| car.draw }
-    @score_font.draw("Score: #{@player.get_score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    @score_font.draw("Score: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
     if !@alive
-      @gameover.draw_rot(512/2, 512/2, ZOrder::UI, 0.0)
+      @gameover.draw_rot(WIDTH/2, HEIGHT/2, ZOrder::UI, 0.0)
     end
   end
 
