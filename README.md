@@ -27,7 +27,7 @@ ruby racing.rb
 
 ## Contributing
 
-You are very welcome for submitting pull requests to us.
+You are very welcome for submitting pull requests to us __after August 24, 2016__.
 
 ## Authors
 
