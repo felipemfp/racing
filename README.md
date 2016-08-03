@@ -32,6 +32,7 @@ You are very welcome for submitting pull requests to us __after August 24, 2016_
 ## Authors
 
 * **Felipe Pontes** - [felipemfp](https://github.com/felipemfp)
+* **Francisco Bento** - [chicobentojr](https://github.com/chicobentojr)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
