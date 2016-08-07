@@ -1,4 +1,4 @@
 require_relative 'src/main'
 
-window = RacingWindow.new
+window = MainWindow.new
 window.show
