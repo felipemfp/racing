@@ -7,7 +7,8 @@ class GameState
       self, 'GAME OVER', Gosu.default_font_name, 45
     )
 
-    @last_millis = 0
+    @initial_millis = Gosu.milliseconds
+    @last_millis = millis
     @cars_interval = 7500
 
     @interval = 2
@@ -36,13 +37,17 @@ class GameState
     @car_speed.play(true)
   end
 
+  def millis
+    Gosu.milliseconds - @initial_millis
+  end
+
   def update
     if @alive
-      if Gosu.milliseconds - @last_millis > @cars_interval
+      if millis - @last_millis > @cars_interval
         @cars << Car.new(@car_image[rand(@car_image.size)])
-        @last_millis = Gosu.milliseconds
-        end
-      if Gosu.milliseconds / 1000 > @interval
+        @last_millis = millis
+      end
+      if millis / 1000 > @interval
         @road.accelerate
         @player.accelerate
         @cars.each(&:accelerate)
@@ -67,7 +72,7 @@ class GameState
         @car_speed.stop
         @alive = false
       end
-      @player.set_score(Gosu.milliseconds / 226)
+      @player.set_score(millis / 226)
     end
   end
 
@@ -80,7 +85,7 @@ class GameState
   end
 
   def button_down(id)
-    if id == Gosu::KbEscape
+    if id == Gosu::KbEscape || id == Gosu::GpButton1 || !@alive
       @car_speed.stop
       @cars.each do |_car|
         car = nil

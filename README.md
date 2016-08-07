@@ -8,10 +8,10 @@ A simple game built with Ruby and Gosu
 
 Please, read the [wiki](https://github.com/gosu/gosu/wiki) from [gosu/gosu](https://github.com/gosu/gosu/) to the appropriate tutorial to install **gosu** on your operating system.
 
-After install **Ruby** and **Gosu**, you should be able to run `racing.rb`.
+After install **Ruby** and **Gosu**, you should be able to call `run.rb`.
 
 ```sh
-ruby racing.rb
+ruby run.rb
 ```
 
 ## Built With
@@ -21,9 +21,11 @@ ruby racing.rb
 
 ## Thanks to...
 
-* [background.png](media/background.png) by [Ajay Badgujar](http://www.ajaybadgujar.com/chapter/creating-2d-car-racing-game-in-android-part-3-adding-road-track-texture/road/)
-* [ambulance.png](media/ambulance.png), [audi.png](media/audi.png), [black_viper.png](media/black_viper.png), [car.png](car.png), [mini_truck.png](media/mini_truck.png), [mini_van.png](media/mini_van.png), [police.png](media/police.png) and [taxi.png](media/taxi.png) by [Unlucky Studio](http://opengameart.org/content/free-top-down-car-sprites-by-unlucky-studio)
-* [car-brake.wav](car-brake.wav) and [car-speed.wav](car-speed.wav) by [FreeSoundEffects.com](http://www.freesoundeffects.com/free-sounds/cars-10069/)
+* [background.png](src/media/images/background.png) by [Ajay Badgujar](http://www.ajaybadgujar.com/chapter/creating-2d-car-racing-game-in-android-part-3-adding-road-track-texture/road/)
+* [menu-bg.jpg](src/media/images/menu-bg.jpg) by [Playground Games](http://wallpapershome.ru/avto-i-moto/gonochnie/forza-igra-mashina-krasnaya-zakat-doroga-trassa-skorost-2007.html)
+* [ambulance.png](src/media/images/ambulance.png), [audi.png](src/media/audi.png), [black_viper.png](src/media/images/black_viper.png), [car.png](src/media/images/car.png), [mini_truck.png](src/media/images/mini_truck.png), [mini_van.png](src/media/images/mini_van.png), [police.png](src/media/images/police.png) and [taxi.png](src/media/images/taxi.png) by [Unlucky Studio](http://opengameart.org/content/free-top-down-car-sprites-by-unlucky-studio)
+* [car-brake.wav](src/media/sounds/car-brake.wav) and [car-speed.wav](src/media/sounds/car-speed.wav) by [FreeSoundEffects.com](http://www.freesoundeffects.com/free-sounds/cars-10069/)
+* [menu.wav](src/media/sounds/menu.wav) by [Azure](http://www.flashkit.com/loops/Pop-Rock/Pop/Whatcha-Azure-10593/index.php)
 
 ## Contributing
 
