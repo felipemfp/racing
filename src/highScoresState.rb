@@ -9,8 +9,6 @@ class HighScoresState
     @current_option = 1
     @background = Gosu::Image.new('src/media/images/high-scores-bg.jpg', tileable: true)
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
-
-    @data = JSON.parse(File.read('src/data/data.json'))
     @score_font = Gosu::Font.new(25, name: 'src/media/fonts/NeedforFont.ttf')
   end
 
@@ -29,20 +27,20 @@ class HighScoresState
     @score_font.draw('3rd', 30, 80, ZOrder::UI)
     @score_font.draw('4th', 30, 105, ZOrder::UI)
     @score_font.draw('5th', 30, 130, ZOrder::UI)
-    @score_font.draw((@data['high_scores'][0]).to_s, 150, 30, ZOrder::UI)
-    @score_font.draw((@data['high_scores'][1]).to_s, 150, 55, ZOrder::UI)
-    @score_font.draw((@data['high_scores'][2]).to_s, 150, 80, ZOrder::UI)
-    @score_font.draw((@data['high_scores'][3]).to_s, 150, 105, ZOrder::UI)
-    @score_font.draw((@data['high_scores'][4]).to_s, 150, 130, ZOrder::UI)
+    @score_font.draw((@main.data['high_scores'][0]).to_s, 150, 30, ZOrder::UI)
+    @score_font.draw((@main.data['high_scores'][1]).to_s, 150, 55, ZOrder::UI)
+    @score_font.draw((@main.data['high_scores'][2]).to_s, 150, 80, ZOrder::UI)
+    @score_font.draw((@main.data['high_scores'][3]).to_s, 150, 105, ZOrder::UI)
+    @score_font.draw((@main.data['high_scores'][4]).to_s, 150, 130, ZOrder::UI)
   end
 
   def button_down(id)
     if id == Gosu::KbReturn || id == Gosu::GpButton2
       case @current_option
       when 0
-        @data['high_scores'] = [0, 0, 0, 0, 0]
+        @main.data['high_scores'] = [0, 0, 0, 0, 0]
         File.open('src/data/data.json', 'w') do |f|
-          f.write(@data.to_json)
+          f.write(@main.data.to_json)
         end
       when 1
         @main.state = 0

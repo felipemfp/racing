@@ -1,8 +1,8 @@
 class Player
   attr_reader :score
 
-  def initialize
-    @image = Gosu::Image.new('src/media/images/car.png')
+  def initialize(car_image)
+    @image = car_image
     @x, @y, @angle = 0.0
     @score = 0
     @vel = 1.0

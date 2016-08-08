@@ -1,11 +1,10 @@
 class GameState
   def initialize(main)
     @main = main
-    @data = JSON.parse(File.read('src/data/data.json'))
 
     @score_font = Gosu::Font.new(15, name: 'src/media/fonts/NeedforFont.ttf')
     @gameover = Gosu::Image.from_text(
-      @data['game_over'].sample, 45, font: 'src/media/fonts/NeedforFont.ttf'
+      @main.data['game_over'].sample, 45, font: 'src/media/fonts/NeedforFont.ttf'
     )
     @gameover_image = Gosu::Image.new('src/media/images/gameover.png', tileable: true)
 
@@ -17,29 +16,9 @@ class GameState
 
     @road = Road.new
 
-    @player = Player.new
+    @player = Player.new(Gosu::Image::new(CARS[@main.data['current_car']]))
     @player.warp(WIDTH / 2, HEIGHT - 90)
 
-    @car_image = [
-      'src/media/images/ambulance.png',
-      'src/media/images/audi.png',
-      'src/media/images/audi.png',
-      'src/media/images/audi.png',
-      'src/media/images/black_viper.png',
-      'src/media/images/black_viper.png',
-      'src/media/images/mini_truck.png',
-      'src/media/images/mini_truck.png',
-      'src/media/images/mini_truck.png',
-      'src/media/images/mini_van.png',
-      'src/media/images/mini_van.png',
-      'src/media/images/police.png',
-      'src/media/images/taxi.png',
-      'src/media/images/taxi.png',
-      'src/media/images/taxi.png',
-      'src/media/images/taxi.png',
-      'src/media/images/taxi.png',
-      'src/media/images/taxi.png'
-    ]
     @cars = []
 
     @alive = true
@@ -57,7 +36,7 @@ class GameState
   def update
     if @alive
       if millis - @last_millis > @cars_interval
-        @cars << Car.new(Gosu::Image.new(@car_image.sample))
+        @cars << Car.new(Gosu::Image.new(CARS.sample))
         @last_millis = millis
       end
       if millis / 1000 > @interval
@@ -84,11 +63,11 @@ class GameState
         @main.play_sound(@car_brake)
         @car_speed.stop
         @alive = false
-        if @player.score > @data['high_scores'][-1]
-          @data['high_scores'] << @player.score
-          @data['high_scores'] = @data['high_scores'].sort.reverse.take(5)
+        if @player.score > @main.data['high_scores'][-1]
+          @main.data['high_scores'] << @player.score
+          @main.data['high_scores'] = @main.data['high_scores'].sort.reverse.take(5)
           File.open('src/data/data.json', 'w') do |f|
-            f.write(@data.to_json)
+            f.write(@main.data.to_json)
           end
         end
       end

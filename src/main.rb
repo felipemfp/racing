@@ -3,19 +3,30 @@ require 'json'
 require_relative 'menuState'
 require_relative 'gameState'
 require_relative 'highScoresState'
+require_relative 'garageState'
 require_relative 'player'
 require_relative 'car'
 require_relative 'road'
 
 WIDTH = 512
 HEIGHT = 512
+CARS = [
+  'src/media/images/car.png',
+  'src/media/images/ambulance.png',
+  'src/media/images/audi.png',
+  'src/media/images/black_viper.png',
+  'src/media/images/mini_truck.png',
+  'src/media/images/mini_van.png',
+  'src/media/images/police.png',
+  'src/media/images/taxi.png'
+].freeze
 
 module ZOrder
   Background, Texture, Cars, Player, UI = *0..4
 end
 
 class MainWindow < Gosu::Window
-  attr_accessor :state
+  attr_accessor :state, :data
 
   def initialize
     super WIDTH, HEIGHT
@@ -24,12 +35,14 @@ class MainWindow < Gosu::Window
     @states = [
       MenuState,
       GameState,
-      HighScoresState
+      HighScoresState,
+      GarageState
     ]
     @state = 0
     @current_state = @states[@state].new(self)
     @last_state = @state
     @song = Gosu::Song.new('src/media/sounds/menu.wav')
+    @data = JSON.parse(File.read('src/data/data.json'))
   end
 
   def update

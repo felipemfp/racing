@@ -5,6 +5,7 @@ class MenuState
     @options = [
       ['Start', 30, 30],
       ['High Scores', 30, 70],
+      ['Garage', 30, 110],
       [@main.get_sound_label, 30, 110],
       ['Quit', 30, 150]
     ]
@@ -36,9 +37,11 @@ class MenuState
       when 1
         @main.state = 2
       when 2
+        @main.state = 3
+      when 3
         @main.toggle_music
         @options[2][0] = @main.get_sound_label
-      when 3
+      when 4
         @main.close
       end
     elsif id == Gosu::KbDown || id == Gosu::GpDown
