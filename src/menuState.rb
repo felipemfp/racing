@@ -1,6 +1,6 @@
-class MenuState
-  def initialize(main)
-    @main = main
+class MenuState < State
+  def initialize(options={})
+    super options
     @font = Gosu::Font.new(25, name: 'src/media/fonts/NeedforFont.ttf')
     @options = [
       ['Start', 30, 30],
@@ -14,7 +14,6 @@ class MenuState
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
     @song = Gosu::Song.new('src/media/sounds/menu.wav')
     @main.play_sound(@song, true)
-    puts(@main.data)
   end
 
   def update

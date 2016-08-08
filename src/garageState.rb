@@ -1,6 +1,6 @@
-class GarageState
-  def initialize(main)
-    @main = main
+class GarageState < State
+  def initialize(options={})
+    super options
     @option_font = Gosu::Font.new(15, name: 'src/media/fonts/NeedforFont.ttf')
     @options = [
       ['Regular Car', 30, 30],

@@ -1,6 +1,6 @@
-class GameState
-  def initialize(main)
-    @main = main
+class GameState < State
+  def initialize(options = {})
+    super options
 
     @score_font = Gosu::Font.new(15, name: 'src/media/fonts/NeedforFont.ttf')
     @gameover = Gosu::Image.from_text(

@@ -1,6 +1,6 @@
-class HighScoresState
-  def initialize(main)
-    @main = main
+class HighScoresState < State
+  def initialize(options = {})
+    super options
     @option_font = Gosu::Font.new(15, name: 'src/media/fonts/NeedforFont.ttf')
     @options = [
       ['Clear', 30, HEIGHT - 65],

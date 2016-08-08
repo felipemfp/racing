@@ -1,4 +1,3 @@
-require_relative 'src/main'
+require_relative 'src/racing'
 
-window = MainWindow.new
-window.show
+Racing.open

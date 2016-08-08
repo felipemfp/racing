@@ -1,12 +1,14 @@
+require 'rubygems'
 require 'gosu'
 require 'json'
+require_relative 'state'
+require_relative 'player'
+require_relative 'car'
+require_relative 'road'
 require_relative 'menuState'
 require_relative 'gameState'
 require_relative 'highScoresState'
 require_relative 'garageState'
-require_relative 'player'
-require_relative 'car'
-require_relative 'road'
 
 WIDTH = 512
 HEIGHT = 512
@@ -40,15 +42,15 @@ class MainWindow < Gosu::Window
       GarageState
     ]
     @state = 0
-    @current_state = @states[@state].new(self)
+    @current_state = @states[@state].new(main:self)
     @last_state = @state
     @data = JSON.parse(File.read('src/data/data.json'))
-    @is_sound_enable = false
+    @is_sound_enable = true
   end
 
   def update
     if @state != @last_state
-      @current_state = @states[@state].new(self)
+      @current_state = @states[@state].new(main:self)
       @last_state = @state
     end
     @current_state.update
