@@ -30,7 +30,7 @@ ruby run.rb
 * [car-brake.wav](src/media/sounds/car-brake.wav) and [car-speed.wav](src/media/sounds/car-speed.wav) by [FreeSoundEffects.com](http://www.freesoundeffects.com/free-sounds/cars-10069/)
 * [menu.wav](src/media/sounds/menu.wav) by [Azure](http://www.flashkit.com/loops/Pop-Rock/Pop/Whatcha-Azure-10593/index.php)
 * [menu-option.wav](src/media/sounds/menu-option.wav) by [Independent.nu](http://opengameart.org/content/16-button-clicks)
-* [Need for Font.ttf](src/media/fonts/NeedforFont.tff) by [Magique Fonts](http://www.1001fonts.com/need-for-font-font.html)
+* [Need for Font.ttf](src/media/fonts/NeedforFont.ttf) by [Magique Fonts](http://www.1001fonts.com/need-for-font-font.html)
 
 ## Contributing
 
