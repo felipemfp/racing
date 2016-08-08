@@ -18,7 +18,7 @@ class GarageState < State
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
     @song = Gosu::Song.new('src/media/sounds/menu.wav')
     @main.play_sound(@song, true)
-    @car = Gosu::Image.new(CARS[@main.data['current_car']])
+    @car = Gosu::Image::load_tiles(CARS[@main.data['current_car']], 140, 140)
     @car_font = Gosu::Font.new(20, name: 'src/media/fonts/NeedforFont.ttf')
   end
 
@@ -36,7 +36,8 @@ class GarageState < State
         @car_font.draw(caption, option[1], option[2], ZOrder::UI)
       end
     end
-    @car.draw_rot(355, 155, ZOrder::Cars, 0.0)
+    image = @car[Gosu::milliseconds / 100 % @car.size]
+    image.draw_rot(355, 155, ZOrder::Cars, 0.0)
   end
 
   def button_down(id)
@@ -46,7 +47,7 @@ class GarageState < State
         @main.state = 0
       else
         @main.data['current_car'] = @current_option
-        @car = Gosu::Image.new(CARS[@main.data['current_car']])
+        @car = Gosu::Image::load_tiles(CARS[@main.data['current_car']], 140, 140)
         File.open('src/data/data.json', 'w') do |f|
           f.write(@main.data.to_json)
         end

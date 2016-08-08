@@ -1,9 +1,9 @@
 class Car
   attr_reader :x, :y
 
-  def initialize(image)
+  def initialize(animation)
     pos = [180.0, 255.0, 330.0]
-    @image = image
+    @animation = animation
     @x = pos[rand(pos.size)]
     @y = rand(100.0..170.0) * -1
     @angle = 0.0
@@ -24,6 +24,7 @@ class Car
   end
 
   def draw
-    @image.draw_rot(@x, @y, ZOrder::Cars, @angle)
+    image = @animation[Gosu::milliseconds / 100 % @animation.size]
+    image.draw_rot(@x, @y, ZOrder::Cars, @angle)
   end
 end

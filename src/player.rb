@@ -1,8 +1,8 @@
 class Player
   attr_reader :score
 
-  def initialize(car_image)
-    @image = car_image
+  def initialize(animation)
+    @animation = animation
     @x, @y, @angle = 0.0
     @score = 0
     @vel = 1.0
@@ -57,6 +57,7 @@ class Player
   end
 
   def draw
-    @image.draw_rot(@x, @y, ZOrder::Player, @angle)
+    image = @animation[Gosu::milliseconds / 100 % @animation.size]
+    image.draw_rot(@x, @y, ZOrder::Player, @angle)
   end
 end

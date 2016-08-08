@@ -16,7 +16,7 @@ class GameState < State
 
     @road = Road.new
 
-    @player = Player.new(Gosu::Image::new(CARS[@main.data['current_car']]))
+    @player = Player.new(Gosu::Image::load_tiles(CARS[@main.data['current_car']], 140, 140))
     @player.warp(WIDTH / 2, HEIGHT - 90)
 
     @cars = []
@@ -36,7 +36,7 @@ class GameState < State
   def update
     if @alive
       if millis - @last_millis > @cars_interval
-        @cars << Car.new(Gosu::Image.new(CARS.sample))
+        @cars << Car.new(Gosu::Image::load_tiles(CARS.sample, 140, 140))
         @last_millis = millis
       end
       if millis / 1000 > @interval
