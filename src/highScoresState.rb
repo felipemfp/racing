@@ -10,6 +10,8 @@ class HighScoresState
     @background = Gosu::Image.new('src/media/images/high-scores-bg.jpg', tileable: true)
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
     @score_font = Gosu::Font.new(25, name: 'src/media/fonts/NeedforFont.ttf')
+    @song = Gosu::Song.new('src/media/sounds/menu.wav')
+    @main.play_sound(@song, true)
   end
 
   def update

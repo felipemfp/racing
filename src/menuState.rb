@@ -6,15 +6,15 @@ class MenuState
       ['Start', 30, 30],
       ['High Scores', 30, 70],
       ['Garage', 30, 110],
-      [@main.get_sound_label, 30, 110],
-      ['Quit', 30, 150]
+      [@main.get_sound_label, 30, 150],
+      ['Quit', 30, 190]
     ]
     @current_option = 0
     @background = Gosu::Image.new('src/media/images/menu-bg.jpg', tileable: true)
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
-    # @song = Gosu::Song.new('src/media/sounds/menu.wav')
-    # @song.play(true)
-    # @main.toggle_sound(@song)
+    @song = Gosu::Song.new('src/media/sounds/menu.wav')
+    @main.play_sound(@song, true)
+    puts(@main.data)
   end
 
   def update
@@ -39,8 +39,8 @@ class MenuState
       when 2
         @main.state = 3
       when 3
-        @main.toggle_music
-        @options[2][0] = @main.get_sound_label
+        @main.toggle_music(@song, true)
+        @options[3][0] = @main.get_sound_label
       when 4
         @main.close
       end

@@ -17,7 +17,7 @@ class GarageState
     @background = Gosu::Image.new('src/media/images/garage-bg.jpg', tileable: true)
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
     @song = Gosu::Song.new('src/media/sounds/menu.wav')
-    @song.play(true)
+    @main.play_sound(@song, true)
     @car = Gosu::Image.new(CARS[@main.data['current_car']])
     @car_font = Gosu::Font.new(20, name: 'src/media/fonts/NeedforFont.ttf')
   end
@@ -52,11 +52,11 @@ class GarageState
         end
       end
     elsif id == Gosu::KbDown || id == Gosu::GpDown
-      @option_sample.play
+      @main.play_sound(@option_sample)
       @current_option += 1
       @current_option = 0 if @current_option >= @options.size
     elsif id == Gosu::KbUp || id == Gosu::GpUp
-      @option_sample.play
+      @main.play_sound(@option_sample)
       @current_option -= 1
       @current_option = @options.size - 1 if @current_option < 0
     elsif id == Gosu::KbEscape || id == Gosu::GpButton1
