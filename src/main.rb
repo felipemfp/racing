@@ -45,7 +45,7 @@ class MainWindow < Gosu::Window
     @current_state = @states[@state].new(main:self)
     @last_state = @state
     @data = JSON.parse(File.read('src/data/data.json'))
-    @is_sound_enable = true
+    @is_sound_enable = @data['config']['sound']
   end
 
   def update
@@ -89,5 +89,13 @@ class MainWindow < Gosu::Window
     else
       return 'Sound Off'
     end
+  end
+
+  def close
+    @data['config']['sound'] = @is_sound_enable
+    File.open('src/data/data.json', 'w') do |f|
+      f.write(@data.to_json)
+    end
+    super
   end
 end

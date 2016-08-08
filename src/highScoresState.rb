@@ -41,9 +41,6 @@ class HighScoresState < State
       case @current_option
       when 0
         @main.data['high_scores'] = [0, 0, 0, 0, 0]
-        File.open('src/data/data.json', 'w') do |f|
-          f.write(@main.data.to_json)
-        end
       when 1
         @main.state = 0
         end

@@ -66,9 +66,6 @@ class GameState < State
         if @player.score > @main.data['high_scores'][-1]
           @main.data['high_scores'] << @player.score
           @main.data['high_scores'] = @main.data['high_scores'].sort.reverse.take(5)
-          File.open('src/data/data.json', 'w') do |f|
-            f.write(@main.data.to_json)
-          end
         end
       end
       @player.set_score(millis / 226)

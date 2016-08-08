@@ -48,9 +48,6 @@ class GarageState < State
       else
         @main.data['current_car'] = @current_option
         @car = Gosu::Image::load_tiles(CARS[@main.data['current_car']], 140, 140)
-        File.open('src/data/data.json', 'w') do |f|
-          f.write(@main.data.to_json)
-        end
       end
     elsif id == Gosu::KbDown || id == Gosu::GpDown
       @main.play_sound(@option_sample)
