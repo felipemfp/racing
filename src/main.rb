@@ -26,7 +26,8 @@ module ZOrder
 end
 
 class MainWindow < Gosu::Window
-  attr_accessor :state, :data
+  attr_accessor :state
+  attr_reader :data
 
   def initialize
     super WIDTH, HEIGHT
