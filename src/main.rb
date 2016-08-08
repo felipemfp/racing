@@ -20,6 +20,7 @@ class MainWindow < Gosu::Window
   def initialize
     super WIDTH, HEIGHT
     self.caption = 'Racing'
+    @is_sound_enable = false
     @states = [
       MenuState,
       GameState,
@@ -28,6 +29,7 @@ class MainWindow < Gosu::Window
     @state = 0
     @current_state = @states[@state].new(self)
     @last_state = @state
+    @song = Gosu::Song.new('src/media/sounds/menu.wav')
   end
 
   def update
@@ -44,5 +46,30 @@ class MainWindow < Gosu::Window
 
   def button_down(id)
     @current_state.button_down(id)
+  end
+
+  def play_sound(song, loop = false)
+    if song.is_a? Gosu::Song
+      song.play(loop) if @is_sound_enable
+    else
+      song.play if @is_sound_enable
+    end
+  end
+
+  def toggle_music
+    if @is_sound_enable
+      @song.stop
+    else
+      @song.play(true)
+    end
+    @is_sound_enable = !@is_sound_enable
+  end
+
+  def get_sound_label
+    if @is_sound_enable
+      return 'Sound On'
+    else
+      return 'Sound Off'
+    end
   end
 end

@@ -47,7 +47,7 @@ class GameState
     @car_brake = Gosu::Sample.new('src/media/sounds/car-brake.wav')
     @car_speed = Gosu::Song.new('src/media/sounds/car-speed.wav')
 
-    @car_speed.play(true)
+    @main.play_sound(@car_speed, true)
   end
 
   def millis
@@ -81,7 +81,7 @@ class GameState
       end
       @cars = @cars.compact
       if @player.collision?(@cars)
-        @car_brake.play
+        @main.play_sound(@car_brake)
         @car_speed.stop
         @alive = false
         if @player.score > @data['high_scores'][-1]

@@ -9,8 +9,6 @@ class HighScoresState
     @current_option = 1
     @background = Gosu::Image.new('src/media/images/high-scores-bg.jpg', tileable: true)
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
-    @song = Gosu::Song.new('src/media/sounds/menu.wav')
-    @song.play(true)
 
     @data = JSON.parse(File.read('src/data/data.json'))
     @score_font = Gosu::Font.new(25, name: 'src/media/fonts/NeedforFont.ttf')
@@ -50,11 +48,11 @@ class HighScoresState
         @main.state = 0
         end
     elsif id == Gosu::KbDown || id == Gosu::GpDown
-      @option_sample.play
+      @main.play_sound(@option_sample)
       @current_option += 1
       @current_option = 0 if @current_option >= @options.size
     elsif id == Gosu::KbUp || id == Gosu::GpUp
-      @option_sample.play
+      @main.play_sound(@option_sample)
       @current_option -= 1
       @current_option = @options.size - 1 if @current_option < 0
     elsif id == Gosu::KbEscape || id == Gosu::GpButton1
