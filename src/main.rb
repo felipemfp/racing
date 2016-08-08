@@ -11,7 +11,7 @@ WIDTH = 512
 HEIGHT = 512
 
 module ZOrder
-  Background, Cars, Player, UI = *0..3
+  Background, Texture, Cars, Player, UI = *0..4
 end
 
 class MainWindow < Gosu::Window

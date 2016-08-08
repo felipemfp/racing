@@ -7,6 +7,7 @@ class GameState
     @gameover = Gosu::Image.from_text(
       @data['game_over'].sample, 45, font: 'src/media/fonts/NeedforFont.ttf'
     )
+    @gameover_image = Gosu::Image.new('src/media/images/gameover.png', tileable: true)
 
     @initial_millis = Gosu.milliseconds
     @last_millis = millis
@@ -101,6 +102,7 @@ class GameState
     @cars.each(&:draw)
     @score_font.draw("Score: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
     @gameover.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) unless @alive
+    @gameover_image.draw(0, 0, ZOrder::Texture) unless @alive
   end
 
   def button_down(id)

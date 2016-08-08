@@ -7,7 +7,7 @@ class HighScoresState
       ['Back', 30, HEIGHT - 45]
     ]
     @current_option = 0
-    @background = Gosu::Image.new('src/media/images/menu-bg.jpg', tileable: true)
+    @background = Gosu::Image.new('src/media/images/high-scores-bg.jpg', tileable: true)
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
     @song = Gosu::Song.new('src/media/sounds/menu.wav')
     @song.play(true)
