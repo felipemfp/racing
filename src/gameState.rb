@@ -1,10 +1,11 @@
 class GameState
   def initialize(main)
     @main = main
+    @data = JSON.parse(File.read('src/data/data.json'))
 
-    @score_font = Gosu::Font.new(20)
+    @score_font = Gosu::Font.new(15, name: 'src/media/fonts/NeedforFont.ttf')
     @gameover = Gosu::Image.from_text(
-      self, 'GAME OVER', Gosu.default_font_name, 45
+      @data['game_over'].sample, 45, font: 'src/media/fonts/NeedforFont.ttf'
     )
 
     @initial_millis = Gosu.milliseconds
@@ -19,13 +20,24 @@ class GameState
     @player.warp(WIDTH / 2, HEIGHT - 90)
 
     @car_image = [
-      Gosu::Image.new('src/media/images/ambulance.png'),
-      Gosu::Image.new('src/media/images/audi.png'),
-      Gosu::Image.new('src/media/images/black_viper.png'),
-      Gosu::Image.new('src/media/images/mini_truck.png'),
-      Gosu::Image.new('src/media/images/mini_van.png'),
-      Gosu::Image.new('src/media/images/taxi.png'),
-      Gosu::Image.new('src/media/images/police.png')
+      'src/media/images/ambulance.png',
+      'src/media/images/audi.png',
+      'src/media/images/audi.png',
+      'src/media/images/audi.png',
+      'src/media/images/black_viper.png',
+      'src/media/images/black_viper.png',
+      'src/media/images/mini_truck.png',
+      'src/media/images/mini_truck.png',
+      'src/media/images/mini_truck.png',
+      'src/media/images/mini_van.png',
+      'src/media/images/mini_van.png',
+      'src/media/images/police.png',
+      'src/media/images/taxi.png',
+      'src/media/images/taxi.png',
+      'src/media/images/taxi.png',
+      'src/media/images/taxi.png',
+      'src/media/images/taxi.png',
+      'src/media/images/taxi.png'
     ]
     @cars = []
 
@@ -44,7 +56,7 @@ class GameState
   def update
     if @alive
       if millis - @last_millis > @cars_interval
-        @cars << Car.new(@car_image[rand(@car_image.size)])
+        @cars << Car.new(Gosu::Image.new(@car_image.sample))
         @last_millis = millis
       end
       if millis / 1000 > @interval
@@ -71,6 +83,13 @@ class GameState
         @car_brake.play
         @car_speed.stop
         @alive = false
+        if @player.score > @data['high_scores'][-1]
+          @data['high_scores'] << @player.score
+          @data['high_scores'] = @data['high_scores'].sort.reverse.take(5)
+          File.open('src/data/data.json', 'w') do |f|
+            f.write(@data.to_json)
+          end
+        end
       end
       @player.set_score(millis / 226)
     end
@@ -81,7 +100,7 @@ class GameState
     @road.draw
     @cars.each(&:draw)
     @score_font.draw("Score: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    @gameover.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, 0.0) unless @alive
+    @gameover.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) unless @alive
   end
 
   def button_down(id)

@@ -1,6 +1,8 @@
 require 'gosu'
+require 'json'
 require_relative 'menuState'
 require_relative 'gameState'
+require_relative 'highScoresState'
 require_relative 'player'
 require_relative 'car'
 require_relative 'road'
@@ -20,7 +22,8 @@ class MainWindow < Gosu::Window
     self.caption = 'Racing'
     @states = [
       MenuState,
-      GameState
+      GameState,
+      HighScoresState
     ]
     @state = 0
     @current_state = @states[@state].new(self)
