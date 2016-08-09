@@ -33,6 +33,7 @@ ruby run.rb
 * [ambulance.wav](src/media/sounds/ambulance.wav) by [Partners In Rhyme](http://www.freesoundeffects.com/free-track/amb-426608/)
 * [police.wav](src/media/sounds/police.wav) by [Partners In Rhyme](http://www.freesoundeffects.com/free-track/police-siren-426661/)
 * [Need for Font.ttf](src/media/fonts/NeedforFont.ttf) by [Magique Fonts](http://www.1001fonts.com/need-for-font-font.html)
+* [Play-Regular.ttf](src/media/fonts/Play-Regular.ttf) by [Google Fonts](https://fonts.google.com/specimen/Play)
 
 ## Contributing
 

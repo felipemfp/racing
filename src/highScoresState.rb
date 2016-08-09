@@ -1,7 +1,7 @@
 class HighScoresState < State
   def initialize(options = {})
     super options
-    @option_font = Gosu::Font.new(15, name: 'src/media/fonts/NeedforFont.ttf')
+    @option_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
     @options = [
       ['Clear', 30, HEIGHT - 65],
       ['Back', 30, HEIGHT - 45]
@@ -9,7 +9,7 @@ class HighScoresState < State
     @current_option = 1
     @background = Gosu::Image.new('src/media/images/high-scores-bg.jpg', tileable: true)
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
-    @score_font = Gosu::Font.new(25, name: 'src/media/fonts/NeedforFont.ttf')
+    @score_font = Gosu::Font.new(25, name: 'src/media/fonts/Play-Regular.ttf')
     @song = Gosu::Song.new('src/media/sounds/menu.wav')
     @main.play_sound(@song, true)
   end

@@ -1,7 +1,7 @@
 class GarageState < State
   def initialize(options = {})
     super options
-    @option_font = Gosu::Font.new(15, name: 'src/media/fonts/NeedforFont.ttf')
+    @option_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
     @options = [
       ['Regular Car', 30, 30],
       ['Ambulance', 30, 60],
@@ -19,7 +19,7 @@ class GarageState < State
     @song = Gosu::Song.new('src/media/sounds/menu.wav')
     @main.play_sound(@song, true)
     @car = Gosu::Image.load_tiles(CARS[@main.data['current_car']][0], 140, 140)
-    @car_font = Gosu::Font.new(20, name: 'src/media/fonts/NeedforFont.ttf')
+    @car_font = Gosu::Font.new(20, name: 'src/media/fonts/Play-Regular.ttf')
   end
 
   def update
