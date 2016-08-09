@@ -9,7 +9,7 @@ class Car
     @x = pos.sample
     @y = rand(100.0..170.0) * -1
     @angle = 0.0
-    @vel = 2.5
+    @vel = rand(2.0..3.0)
   end
 
   def warp(x, y)
