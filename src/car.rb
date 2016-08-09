@@ -1,10 +1,12 @@
 class Car
-  attr_reader :x, :y
+  attr_reader :x, :y, :song
+  attr_accessor :sample
 
-  def initialize(animation)
+  def initialize(animation_file, song_file)
     pos = [180.0, 255.0, 330.0]
-    @animation = animation
-    @x = pos[rand(pos.size)]
+    @animation = Gosu::Image.load_tiles(animation_file, 140, 140)
+    @song = Gosu::Sample.new(song_file) if song_file
+    @x = pos.sample
     @y = rand(100.0..170.0) * -1
     @angle = 0.0
     @vel = 2.5

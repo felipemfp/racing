@@ -16,7 +16,7 @@ class GameState < State
 
     @road = Road.new
 
-    @player = Player.new(Gosu::Image::load_tiles(CARS[@main.data['current_car']], 140, 140))
+    @player = Player.new(CARS[@main.data['current_car']][0], CARS[@main.data['current_car']][1])
     @player.warp(WIDTH / 2, HEIGHT - 90)
 
     @cars = []
@@ -27,6 +27,9 @@ class GameState < State
     @car_speed = Gosu::Song.new('src/media/sounds/car-speed.wav')
 
     @main.play_sound(@car_speed, true)
+    if @player.song
+      @player.sample = @main.play_sound(@player.song, true, 0.5)
+    end
   end
 
   def millis
@@ -36,7 +39,12 @@ class GameState < State
   def update
     if @alive
       if millis - @last_millis > @cars_interval
-        @cars << Car.new(Gosu::Image::load_tiles(CARS.sample, 140, 140))
+        next_car = CARS.sample
+        car = Car.new(next_car[0], next_car[1])
+        if car.song
+          car.sample = @main.play_sound(car.song, true, 0.3)
+        end
+        @cars << car
         @last_millis = millis
       end
       if millis / 1000 > @interval
@@ -56,7 +64,10 @@ class GameState < State
       @road.move
       @cars.each(&:move)
       @cars.each do |car|
-        car = nil if car.y >= 512 + 140
+        if car.y >= 512 + 140
+          car.sample.stop if car.sample
+          car = nil
+        end
       end
       @cars = @cars.compact
       if @player.collision?(@cars)
@@ -67,6 +78,7 @@ class GameState < State
           @main.data['high_scores'] << @player.score
           @main.data['high_scores'] = @main.data['high_scores'].sort.reverse.take(5)
         end
+        @player.sample.stop if @player.sample
       end
       @player.set_score(millis / 226)
     end
@@ -84,11 +96,13 @@ class GameState < State
   def button_down(id)
     if id == Gosu::KbEscape || id == Gosu::GpButton1 || !@alive
       @car_speed.stop
-      @cars.each do |_car|
+      @cars.each do |car|
+        car.sample.stop if car.sample
         car = nil
       end
       @cars = @cars.compact
       @player.set_score(0)
+      @player.sample.stop if @player.sample
       @main.state = 0
     end
   end

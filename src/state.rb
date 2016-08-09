@@ -1,5 +1,5 @@
 class State
-  def initialize(options={})
+  def initialize(options = {})
     @main = options[:main]
   end
 
@@ -11,7 +11,7 @@ class State
     raise NotImplementedError, 'This is not implemented!'
   end
 
-  def button_down(id)
+  def button_down(_id)
     raise NotImplementedError, 'This is not implemented!'
   end
 end

@@ -13,14 +13,14 @@ require_relative 'garageState'
 WIDTH = 512
 HEIGHT = 512
 CARS = [
-  'src/media/images/car.png',
-  'src/media/images/ambulance.png',
-  'src/media/images/audi.png',
-  'src/media/images/black_viper.png',
-  'src/media/images/mini_truck.png',
-  'src/media/images/mini_van.png',
-  'src/media/images/police.png',
-  'src/media/images/taxi.png'
+  ['src/media/images/car.png', nil],
+  ['src/media/images/ambulance.png', 'src/media/sounds/ambulance.wav'],
+  ['src/media/images/audi.png', nil],
+  ['src/media/images/black_viper.png', nil],
+  ['src/media/images/mini_truck.png', nil],
+  ['src/media/images/mini_van.png', nil],
+  ['src/media/images/police.png', 'src/media/sounds/police.wav'],
+  ['src/media/images/taxi.png', nil]
 ].freeze
 
 module ZOrder
@@ -46,12 +46,12 @@ class MainWindow < Gosu::Window
     @data = JSON.parse(File.read('src/data/data.json'))
     @is_sound_enable = @data['config']['sound']
 
-    @current_state = @states[@state].new(main:self)
+    @current_state = @states[@state].new(main: self)
   end
 
   def update
     if @state != @last_state
-      @current_state = @states[@state].new(main:self)
+      @current_state = @states[@state].new(main: self)
       @last_state = @state
     end
     @current_state.update
@@ -65,11 +65,11 @@ class MainWindow < Gosu::Window
     @current_state.button_down(id)
   end
 
-  def play_sound(_song, _loop = false)
+  def play_sound(_song, _loop = false, _volume = 1, _speed = 1)
     if _song.is_a? Gosu::Song
       _song.play(_loop) if @is_sound_enable
     else
-      _song.play if @is_sound_enable
+      _song.play(_volume, _speed, _loop) if @is_sound_enable
     end
   end
 

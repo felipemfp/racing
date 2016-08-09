@@ -1,5 +1,5 @@
 class GarageState < State
-  def initialize(options={})
+  def initialize(options = {})
     super options
     @option_font = Gosu::Font.new(15, name: 'src/media/fonts/NeedforFont.ttf')
     @options = [
@@ -18,7 +18,7 @@ class GarageState < State
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
     @song = Gosu::Song.new('src/media/sounds/menu.wav')
     @main.play_sound(@song, true)
-    @car = Gosu::Image::load_tiles(CARS[@main.data['current_car']], 140, 140)
+    @car = Gosu::Image.load_tiles(CARS[@main.data['current_car']][0], 140, 140)
     @car_font = Gosu::Font.new(20, name: 'src/media/fonts/NeedforFont.ttf')
   end
 
@@ -36,7 +36,7 @@ class GarageState < State
         @car_font.draw(caption, option[1], option[2], ZOrder::UI)
       end
     end
-    image = @car[Gosu::milliseconds / 100 % @car.size]
+    image = @car[Gosu.milliseconds / 100 % @car.size]
     image.draw_rot(355, 155, ZOrder::Cars, 0.0)
   end
 
@@ -47,7 +47,7 @@ class GarageState < State
         @main.state = 0
       else
         @main.data['current_car'] = @current_option
-        @car = Gosu::Image::load_tiles(CARS[@main.data['current_car']], 140, 140)
+        @car = Gosu::Image.load_tiles(CARS[@main.data['current_car']][0], 140, 140)
       end
     elsif id == Gosu::KbDown || id == Gosu::GpDown
       @main.play_sound(@option_sample)

@@ -1,8 +1,10 @@
 class Player
-  attr_reader :score
+  attr_reader :score, :song
+  attr_accessor :sample
 
-  def initialize(animation)
-    @animation = animation
+  def initialize(animation_file, song_file)
+    @animation = Gosu::Image.load_tiles(animation_file, 140, 140)
+    @song = Gosu::Sample.new(song_file) if song_file
     @x, @y, @angle = 0.0
     @score = 0
     @vel = 1.0
@@ -57,7 +59,7 @@ class Player
   end
 
   def draw
-    image = @animation[Gosu::milliseconds / 100 % @animation.size]
+    image = @animation[Gosu.milliseconds / 100 % @animation.size]
     image.draw_rot(@x, @y, ZOrder::Player, @angle)
   end
 end

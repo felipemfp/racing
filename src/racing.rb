@@ -1,7 +1,7 @@
 require_relative 'main'
 
 module Racing
-  def Racing.open
+  def self.open
     window = MainWindow.new
     window.show
   end

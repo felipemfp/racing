@@ -1,5 +1,5 @@
 class MenuState < State
-  def initialize(options={})
+  def initialize(options = {})
     super options
     @font = Gosu::Font.new(25, name: 'src/media/fonts/NeedforFont.ttf')
     @options = [
