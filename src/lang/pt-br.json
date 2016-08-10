@@ -14,16 +14,16 @@
     "Você vai\npagar por\nisso!",
     "Ei!\nNão faça isso!",
     "Presta atenção!",
-    "Speed it\nup already,\njackass!",
+    "Sai da frente,\nimbecil!",
     "Mas que\np***a, idiota!",
     "Fica na\nsua faixa!",
-    "Pick a speed\nand stick\nwith it!",
+    "Acelerador\nnão é brinquedo\nnão!",
     "Você é\num idiota!",
     "Vê se aprende\na dirigir!",
     "Obrigado por\nme cortar!",
     "VOCÊ TÁ CEGO?"
   ],
-  "score_label": "Escore",
+  "score_label": "Pontuação",
   "option_back": "Voltar",
   "option_clear": "Limpar",
   "high_scores": [
@@ -35,7 +35,7 @@
   ],
   "cars_option": [
     "Padrão",
-    "Ambulancia",
+    "Ambulância",
     "Audi",
     "Viper Preto",
     "Picape",
