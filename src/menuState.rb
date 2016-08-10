@@ -7,7 +7,8 @@ class MenuState < State
       @main.lang.menu[1],
       @main.lang.menu[2],
       @main.get_sound_label,
-      @main.lang.menu[4]
+      @main.lang.menu[4],
+      @main.lang.menu[5]
     ]
     @margins = [30, 40]
     @current_option = 0
@@ -43,6 +44,8 @@ class MenuState < State
         @main.toggle_music(@song, true)
         @options[3] = @main.get_sound_label
       when 4
+        @main.state = 4
+      when 5
         @main.close
       end
     elsif id == Gosu::KbDown || id == Gosu::GpDown

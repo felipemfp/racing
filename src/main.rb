@@ -10,6 +10,7 @@ require_relative 'menuState'
 require_relative 'gameState'
 require_relative 'highScoresState'
 require_relative 'garageState'
+require_relative 'optionsState'
 
 WIDTH = 512
 HEIGHT = 512
@@ -40,12 +41,13 @@ class MainWindow < Gosu::Window
       MenuState,
       GameState,
       HighScoresState,
-      GarageState
+      GarageState,
+      OptionsState
     ]
     @state = 0
     @last_state = @state
     @data = JSON.parse(File.read('src/data/data.json'))
-    @lang = Lang.new(@data['config']['language'])
+    @lang = Lang.new(main: self, lang: @data['config']['language'])
     @is_sound_enable = @data['config']['sound']
 
     @current_state = @states[@state].new(main: self)

@@ -1,9 +1,11 @@
 {
+  "language": "Português",
   "menu": [
     "Iniciar",
     "Recordes",
     "Garagem",
     ["Som Ligado", "Som Desligado"],
+    "Opções",
     "Sair"
   ],
   "game_over": [
@@ -41,5 +43,13 @@
     "Mini Van",
     "Polícia",
     "Táxi"
+  ],
+  "options": [
+    "Idioma",
+    "Som"
+  ],
+  "options_sound": [
+    "Ligado",
+    "Desligado"
   ]
 }

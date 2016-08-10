@@ -25,6 +25,7 @@ ruby run.rb
 * [menu-bg.jpg](src/media/images/menu-bg.jpg) by [Playground Games](http://wallpapershome.ru/avto-i-moto/gonochnie/forza-igra-mashina-krasnaya-zakat-doroga-trassa-skorost-2007.html)
 * [high-scores-bg.jpg](src/media/images/high-scores-bg.jpg) by [HD Wallpapers Act](http://www.hdwallpapersact.com/street-racing-car-wallpapers/)
 * [garage-bg.jpg](src/media/images/garage-bg.jpg) by [Wallpapers Craft](https://wallpaperscraft.com/download/cars_style_lamborghini_orange_garage_85226/1920x1080)
+* [options-bg.jpg](src/media/images/options-bg.jpg) by [New Evolution Designs](https://newevolutiondesigns.com/20-hd-car-wallpapers)
 * [gameover.png](src/media/images/gameover.png) by [Spyder Wallpapers](http://www.spyderonlines.com/wallpapers/broken-glass-wallpaper.html)
 * [ambulance.png](src/media/images/ambulance.png), [audi.png](src/media/audi.png), [black_viper.png](src/media/images/black_viper.png), [car.png](src/media/images/car.png), [mini_truck.png](src/media/images/mini_truck.png), [mini_van.png](src/media/images/mini_van.png), [police.png](src/media/images/police.png) and [taxi.png](src/media/images/taxi.png) by [Unlucky Studio](http://opengameart.org/content/free-top-down-car-sprites-by-unlucky-studio)
 * [car-brake.wav](src/media/sounds/car-brake.wav) and [car-speed.wav](src/media/sounds/car-speed.wav) by [FreeSoundEffects.com](http://www.freesoundeffects.com/free-sounds/cars-10069/)

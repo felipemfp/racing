@@ -1,8 +1,10 @@
 {
+  "language": "English",
   "menu": [
     "Start",
     "High Scores",
     "Garage", ["Sound On", "Sound Off"],
+    "Options",
     "Quit"
   ],
   "game_over": [
@@ -40,5 +42,14 @@
     "Mini Van",
     "Police",
     "Taxi"
+  ],
+  "options": [
+    "Language",
+    "Sound"
+  ],
+  "options_sound": [
+    "On",
+    "Off"
   ]
+
 }
