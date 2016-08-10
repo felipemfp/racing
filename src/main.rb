@@ -90,9 +90,9 @@ class MainWindow < Gosu::Window
 
   def get_sound_label
     if @is_sound_enable
-      return @lang.menu[3][0]
+      return @lang.options_sound[0]
     else
-      return @lang.menu[3][1]
+      return @lang.options_sound[1]
     end
   end
 

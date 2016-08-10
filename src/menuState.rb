@@ -2,14 +2,7 @@ class MenuState < State
   def initialize(options = {})
     super options
     @font = Gosu::Font.new(25, name: 'src/media/fonts/Play-Regular.ttf')
-    @options = [
-      @main.lang.menu[0],
-      @main.lang.menu[1],
-      @main.lang.menu[2],
-      @main.get_sound_label,
-      @main.lang.menu[4],
-      @main.lang.menu[5]
-    ]
+    @options = @main.lang.menu
     @margins = [30, 40]
     @current_option = 0
     @background = Gosu::Image.new('src/media/images/menu-bg.jpg', tileable: true)
@@ -34,19 +27,10 @@ class MenuState < State
   def button_down(id)
     if id == Gosu::KbReturn || id == Gosu::GpButton2
       case @current_option
-      when 0
-        @main.state = 1
-      when 1
-        @main.state = 2
-      when 2
-        @main.state = 3
-      when 3
-        @main.toggle_music(@song, true)
-        @options[3] = @main.get_sound_label
-      when 4
-        @main.state = 4
-      when 5
+      when @options.size - 1
         @main.close
+      else
+        @main.state = @current_option + 1
       end
     elsif id == Gosu::KbDown || id == Gosu::GpDown
       @main.play_sound(@option_sample)

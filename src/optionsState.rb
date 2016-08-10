@@ -31,6 +31,7 @@ class OptionsState < State
       end
     end
     @option_font.draw(@current_language[0], @margins[3], @margins[0], ZOrder::UI)
+    @option_font.draw(@options_sound, @margins[3], @margins[0] * 2, ZOrder::UI)
   end
 
   def button_down(id)
@@ -41,9 +42,9 @@ class OptionsState < State
       when 0
         @current_language = @main.lang.switch
         load_options
-      else
-        @main.data['current_car'] = @current_option
-        @car = Gosu::Image.load_tiles(CARS[@main.data['current_car']][0], 140, 140)
+      when 1
+        @main.toggle_music(@song, true)
+        load_options
       end
     elsif id == Gosu::KbDown || id == Gosu::GpDown
       @main.play_sound(@option_sample)
@@ -61,6 +62,6 @@ class OptionsState < State
   def load_options
     @options = @main.lang.options
     @options.push(@main.lang.back) if @options[@options.size - 1] != @main.lang.back
-    @options_sound = @main.lang.options_sound
+    @options_sound = @main.get_sound_label
   end
 end

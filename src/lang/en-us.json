@@ -3,7 +3,7 @@
   "menu": [
     "Start",
     "High Scores",
-    "Garage", ["Sound On", "Sound Off"],
+    "Garage",
     "Options",
     "Quit"
   ],
