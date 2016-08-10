@@ -3,12 +3,13 @@ class MenuState < State
     super options
     @font = Gosu::Font.new(25, name: 'src/media/fonts/Play-Regular.ttf')
     @options = [
-      ['Start', 30, 30],
-      ['High Scores', 30, 70],
-      ['Garage', 30, 110],
-      [@main.get_sound_label, 30, 150],
-      ['Quit', 30, 190]
+      @main.lang.menu[0],
+      @main.lang.menu[1],
+      @main.lang.menu[2],
+      @main.get_sound_label,
+      @main.lang.menu[4]
     ]
+    @margins = [30, 40]
     @current_option = 0
     @background = Gosu::Image.new('src/media/images/menu-bg.jpg', tileable: true)
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
@@ -22,9 +23,10 @@ class MenuState < State
   def draw
     @background.draw(0, 0, ZOrder::Background)
     @options.each_with_index do |option, i|
-      caption = option[0]
+      caption = option
       caption = '  ' + caption if i == @current_option
-      @font.draw(caption, option[1], option[2], ZOrder::UI)
+      top_margin = @margins[0] + (@margins[1] * i)
+      @font.draw(caption, @margins[0], top_margin, ZOrder::UI)
     end
   end
 
@@ -39,7 +41,7 @@ class MenuState < State
         @main.state = 3
       when 3
         @main.toggle_music(@song, true)
-        @options[3][0] = @main.get_sound_label
+        @options[3] = @main.get_sound_label
       when 4
         @main.close
       end

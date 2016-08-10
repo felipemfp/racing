@@ -1,0 +1,44 @@
+{
+  "menu": [
+    "Start",
+    "High Scores",
+    "Garage", ["Sound On", "Sound Off"],
+    "Quit"
+  ],
+  "game_over": [
+    "GAME OVER",
+    "SUCH A FOOL",
+    "SUCH A LOSER",
+    "You'll pay\nfor this!",
+    "Hey!\nDon't do that!",
+    "Pay attention!",
+    "Speed it\nup already,\njackass!",
+    "Wake the\nf*ck up, idiot!",
+    "Stay in\nyour lane!",
+    "Pick a speed\nand stick\nwith it!",
+    "You're\nan idiot!",
+    "Learn how\nto drive!",
+    "Thanks for\ncutting me\noff!",
+    "Blinker?"
+  ],
+  "score_label": "Score",
+  "option_back": "Back",
+  "option_clear": "Clear",
+  "high_scores": [
+    "1st",
+    "2nd",
+    "3rd",
+    "4th",
+    "5th"
+  ],
+  "cars_option": [
+    "Regular Car",
+    "Ambulance",
+    "Audi",
+    "Black Viper",
+    "Mini Truck",
+    "Mini Van",
+    "Police",
+    "Taxi"
+  ]
+}

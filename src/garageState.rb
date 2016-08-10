@@ -2,17 +2,9 @@ class GarageState < State
   def initialize(options = {})
     super options
     @option_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
-    @options = [
-      ['Regular Car', 30, 30],
-      ['Ambulance', 30, 60],
-      ['Audi', 30, 90],
-      ['Black Viper', 30, 120],
-      ['Mini Truck', 30, 150],
-      ['Mini Van', 30, 180],
-      ['Police', 30, 210],
-      ['Taxi', 30, 240],
-      ['Back', 30, HEIGHT - 45]
-    ]
+    @options = @main.lang.cars_option
+    @options.push(@main.lang.back)
+    @margins = [30, 30, HEIGHT - 45]
     @current_option = @main.data['current_car']
     @background = Gosu::Image.new('src/media/images/garage-bg.jpg', tileable: true)
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
@@ -28,12 +20,14 @@ class GarageState < State
   def draw
     @background.draw(0, 0, ZOrder::Background)
     @options.each_with_index do |option, i|
-      caption = option[0]
+      caption = option
       caption = '  ' + caption if i == @current_option
       if i == @options.size - 1
-        @option_font.draw(caption, option[1], option[2], ZOrder::UI)
+        top_margin = @margins[2]
+        @option_font.draw(caption, @margins[0], top_margin, ZOrder::UI)
       else
-        @car_font.draw(caption, option[1], option[2], ZOrder::UI)
+        top_margin = @margins[0] + (@margins[1] * i)
+        @car_font.draw(caption, @margins[0], top_margin, ZOrder::UI)
       end
     end
     image = @car[Gosu.milliseconds / 100 % @car.size]

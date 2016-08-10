@@ -3,9 +3,13 @@ class HighScoresState < State
     super options
     @option_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
     @options = [
-      ['Clear', 30, HEIGHT - 65],
-      ['Back', 30, HEIGHT - 45]
+      @main.lang.clear,
+      @main.lang.back
     ]
+    @margin_option = [HEIGHT - 65, HEIGHT - 45]
+    @margin_score = [30, 150, 25]
+    @scores = @main.data['high_scores']
+    @scores_label = @main.lang.high_scores_label
     @current_option = 1
     @background = Gosu::Image.new('src/media/images/high-scores-bg.jpg', tileable: true)
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
@@ -20,27 +24,23 @@ class HighScoresState < State
   def draw
     @background.draw(0, 0, ZOrder::Background)
     @options.each_with_index do |option, i|
-      caption = option[0]
+      caption = option
       caption = '  ' + caption if i == @current_option
-      @option_font.draw(caption, option[1], option[2], ZOrder::UI)
+      @option_font.draw(caption, @margin_score[0], @margin_option[i], ZOrder::UI)
     end
-    @score_font.draw('1st', 30, 30, ZOrder::UI)
-    @score_font.draw('2nd', 30, 55, ZOrder::UI)
-    @score_font.draw('3rd', 30, 80, ZOrder::UI)
-    @score_font.draw('4th', 30, 105, ZOrder::UI)
-    @score_font.draw('5th', 30, 130, ZOrder::UI)
-    @score_font.draw((@main.data['high_scores'][0]).to_s, 150, 30, ZOrder::UI)
-    @score_font.draw((@main.data['high_scores'][1]).to_s, 150, 55, ZOrder::UI)
-    @score_font.draw((@main.data['high_scores'][2]).to_s, 150, 80, ZOrder::UI)
-    @score_font.draw((@main.data['high_scores'][3]).to_s, 150, 105, ZOrder::UI)
-    @score_font.draw((@main.data['high_scores'][4]).to_s, 150, 130, ZOrder::UI)
+    @scores.each_with_index do |score, i|
+      left_margin = @margin_score[0]
+      top_margin = @margin_score[0] + (@margin_score[2] * i)
+      @score_font.draw(@scores_label[i], left_margin, top_margin, ZOrder::UI)
+      @score_font.draw(score, @margin_score[1], top_margin, ZOrder::UI)
+    end
   end
 
   def button_down(id)
     if id == Gosu::KbReturn || id == Gosu::GpButton2
       case @current_option
       when 0
-        @main.data['high_scores'] = [0, 0, 0, 0, 0]
+        @scores = [0, 0, 0, 0, 0]
       when 1
         @main.state = 0
         end

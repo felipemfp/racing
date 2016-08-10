@@ -5,6 +5,7 @@ require_relative 'state'
 require_relative 'player'
 require_relative 'car'
 require_relative 'road'
+require_relative 'lang'
 require_relative 'menuState'
 require_relative 'gameState'
 require_relative 'highScoresState'
@@ -29,7 +30,7 @@ end
 
 class MainWindow < Gosu::Window
   attr_accessor :state
-  attr_reader :data
+  attr_reader :data, :lang
 
   def initialize
     super WIDTH, HEIGHT
@@ -44,6 +45,7 @@ class MainWindow < Gosu::Window
     @state = 0
     @last_state = @state
     @data = JSON.parse(File.read('src/data/data.json'))
+    @lang = Lang.new(@data['config']['language'])
     @is_sound_enable = @data['config']['sound']
 
     @current_state = @states[@state].new(main: self)
@@ -86,9 +88,9 @@ class MainWindow < Gosu::Window
 
   def get_sound_label
     if @is_sound_enable
-      return 'Sound On'
+      return @lang.menu[3][0]
     else
-      return 'Sound Off'
+      return @lang.menu[3][1]
     end
   end
 

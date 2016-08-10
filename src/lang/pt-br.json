@@ -1,0 +1,45 @@
+{
+  "menu": [
+    "Iniciar",
+    "Recordes",
+    "Garagem",
+    ["Som Ligado", "Som Desligado"],
+    "Sair"
+  ],
+  "game_over": [
+    "FIM DE JOGO",
+    "QUE OTÁRIO!",
+    "QUE IMBECIL!",
+    "Você vai\npagar por\nisso!",
+    "Ei!\nNão faça isso!",
+    "Presta atenção!",
+    "Speed it\nup already,\njackass!",
+    "Mas que\np***a, idiota!",
+    "Fica na\nsua faixa!",
+    "Pick a speed\nand stick\nwith it!",
+    "Você é\num idiota!",
+    "Vê se aprende\na dirigir!",
+    "Obrigado por\nme cortar!",
+    "VOCÊ TÁ CEGO?"
+  ],
+  "score_label": "Escore",
+  "option_back": "Voltar",
+  "option_clear": "Limpar",
+  "high_scores": [
+    "1°",
+    "2°",
+    "3°",
+    "4°",
+    "5°"
+  ],
+  "cars_option": [
+    "Padrão",
+    "Ambulancia",
+    "Audi",
+    "Viper Preto",
+    "Picape",
+    "Mini Van",
+    "Polícia",
+    "Táxi"
+  ]
+}
