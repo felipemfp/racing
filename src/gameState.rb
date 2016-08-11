@@ -12,6 +12,14 @@ class GameState < State
     @last_millis = millis
     @cars_interval = 7500
 
+    @distance = 0
+    @distance_per_car = 7.5
+    @distance_last_car = 0
+
+    @cars_outdated = 0
+    @cars_interval = 10
+    @cars_from_now = 0
+
     @interval = 2
     @score_label = @main.lang.score_label
 
@@ -39,7 +47,7 @@ class GameState < State
 
   def update
     if @alive
-      if millis - @last_millis > @cars_interval
+      if @distance - @distance_per_car > @distance_last_car
         next_car = CARS.sample
         car = Car.new(next_car[0], next_car[1], @player.speed)
         if car.song
@@ -47,6 +55,7 @@ class GameState < State
         end
         @cars << car
         @last_millis = millis
+        @distance_last_car = @distance
       end
       if millis / 1000 > @interval
         @road.accelerate
@@ -72,13 +81,18 @@ class GameState < State
       end
       @road.move
       @cars.each(&:move)
-      @cars.each do |car|
+      @cars.each_with_index do |car, i|
         if car.y >= 512 + 140
           car.sample.stop if car.sample
-          car = nil
+          @cars[i] = nil
+          @cars_outdated += 1
         end
       end
       @cars = @cars.compact
+      if @cars_outdated - @cars_from_now == @cars_interval
+        @distance_per_car -= 0.5
+        @cars_from_now = @cars_outdated
+      end
       if @player.collision?(@cars)
         @main.play_sound(@car_brake)
         @car_speed.stop
@@ -90,6 +104,10 @@ class GameState < State
         @player.sample.stop if @player.sample
       end
       @player.set_score(millis / 226)
+      if millis - @last_millis > 500
+        @distance += @player.speed
+        @last_millis = millis
+      end
     end
   end
 
@@ -97,12 +115,17 @@ class GameState < State
     @player.draw
     @road.draw
     @cars.each(&:draw)
-    @score_font.draw("#{@score_label}: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    @score_font.draw("Velocidade: #{@player.speed}", 10, 40, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    @score_font.draw("Pista: #{@road.speed}", 10, 80, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    if @cars.size > 0
-      @score_font.draw("Carro: #{@cars[0].speed}", 10, 100, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    end
+    @score_font.draw("#{@score_label}: #{@cars_outdated}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    # @score_font.draw("Velocidade: #{@player.speed}", 10, 40, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    # @score_font.draw("Distance: #{@distance}", 10, 60, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    # @score_font.draw("Pista: #{@road.speed}", 10, 80, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    # @score_font.draw("Limite: #{@distance_per_car}", 10, 100, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    # @score_font.draw("Last: #{@distance_last_car}", 10, 120, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    # @score_font.draw("Ultrapassados: #{@cars_outdated}", 10, 140, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    # @score_font.draw("dasdas: #{@cars_from_now}", 10, 160, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    # if @cars.size > 0
+    #   @score_font.draw("Carro: #{@cars[0].speed}", 10, 200, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    # end
     @gameover.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) unless @alive
     @gameover_image.draw(0, 0, ZOrder::Texture) unless @alive
   end
