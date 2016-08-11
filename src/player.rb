@@ -1,5 +1,5 @@
 class Player
-  attr_reader :score, :song
+  attr_reader :score, :song, :speed
   attr_accessor :sample
 
   def initialize(animation_file, song_file)
@@ -7,7 +7,10 @@ class Player
     @song = Gosu::Sample.new(song_file) if song_file
     @x, @y, @angle = 0.0
     @score = 0
-    @vel = 1.0
+    @speed = 1.0
+    @speed_limit = 3.5
+    @speed_minimun = 1.0
+    @acceleration = [1.025,0.975]
   end
 
   def warp(x, y)
@@ -20,7 +23,19 @@ class Player
   end
 
   def accelerate
-    @vel *= 1.025
+    if @speed > @speed_limit
+      @speed = @speed_limit
+    else
+      @speed *= @acceleration[0]
+    end
+  end
+
+  def brake
+    if @speed < @speed_minimun
+      @speed = @speed_minimun
+    else
+      @speed *= @acceleration[1]
+    end
   end
 
   def reset_angle
@@ -29,13 +44,13 @@ class Player
 
   def move_left
     @angle = -5.0
-    @x -= @vel
+    @x -= @speed
     @x = 175.0 if @x <= 175.0
   end
 
   def move_right
     @angle = 5.0
-    @x += @vel
+    @x += @speed
     @x = 335.0 if @x >= 335.0
   end
 
