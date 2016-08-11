@@ -50,5 +50,6 @@
   "options_sound": [
     "Ligado",
     "Desligado"
-  ]
+  ],
+  "pause_text": "Jogo Pausado"
 }

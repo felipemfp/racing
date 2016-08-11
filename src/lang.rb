@@ -74,4 +74,9 @@ class Lang
   def options_sound
     return @data['options_sound']
   end
+
+  def pause_text
+    return @data['pause_text']
+  end
+
 end

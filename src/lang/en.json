@@ -50,6 +50,6 @@
   "options_sound": [
     "On",
     "Off"
-  ]
-
+  ],
+  "pause_text": "Paused"
 }

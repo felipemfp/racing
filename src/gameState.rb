@@ -8,6 +8,11 @@ class GameState < State
     )
     @gameover_image = Gosu::Image.new('src/media/images/gameover.png', tileable: true)
 
+    @pause_text = Gosu::Image.from_text(
+      @main.lang.pause_text, 45, font: 'src/media/fonts/NeedforFont.ttf'
+    )
+    @pause_image = Gosu::Image.new('src/media/images/shade.png', tileable: true)
+
     @initial_millis = Gosu.milliseconds
     @last_millis = millis
     @cars_interval = 7500
@@ -31,6 +36,7 @@ class GameState < State
     @cars = []
 
     @alive = true
+    @paused = false
 
     @car_brake = Gosu::Sample.new('src/media/sounds/car-brake.wav')
     @car_speed = Gosu::Song.new('src/media/sounds/car-speed.wav')
@@ -47,66 +53,68 @@ class GameState < State
 
   def update
     if @alive
-      if @distance - @distance_per_car > @distance_last_car
-        next_car = CARS.sample
-        car = Car.new(next_car[0], next_car[1], @player.speed)
-        if car.song
-          car.sample = @main.play_sound(car.song, true, 0.3)
+      if !@paused
+        if @distance - @distance_per_car > @distance_last_car
+          next_car = CARS.sample
+          car = Car.new(next_car[0], next_car[1], @player.speed)
+          if car.song
+            car.sample = @main.play_sound(car.song, true, 0.3)
+          end
+          @cars << car
+          @last_millis = millis
+          @distance_last_car = @distance
         end
-        @cars << car
-        @last_millis = millis
-        @distance_last_car = @distance
-      end
-      if millis / 1000 > @interval
-        @road.accelerate
-        @player.accelerate
-        @cars.each(&:accelerate)
-        @cars_interval -= 250 if @cars_interval > 1500
-        @interval *= 1.2
-      end
-      if Gosu.button_down?(Gosu::KbLeft) || Gosu.button_down?(Gosu::GpLeft)
-        @player.move_left
-      elsif Gosu.button_down?(Gosu::KbRight) || Gosu.button_down?(Gosu::GpRight)
-        @player.move_right
-      elsif Gosu.button_down?(Gosu::KbUp) || Gosu.button_down?(Gosu::GpUp)
-        @player.accelerate
-        @cars.each(&:accelerate)
-        @road.accelerate
-      elsif Gosu.button_down?(Gosu::KbDown) || Gosu.button_down?(Gosu::GpDown)
-        @player.brake
-        @cars.each(&:brake)
-        @road.brake
-      else
-        @player.reset_angle
-      end
-      @road.move
-      @cars.each(&:move)
-      @cars.each_with_index do |car, i|
-        if car.y >= 512 + 140
-          car.sample.stop if car.sample
-          @cars[i] = nil
-          @cars_outdated += 1
+        if millis / 1000 > @interval
+          @road.accelerate
+          @player.accelerate
+          @cars.each(&:accelerate)
+          @cars_interval -= 250 if @cars_interval > 1500
+          @interval *= 1.2
         end
-      end
-      @cars = @cars.compact
-      if @cars_outdated - @cars_from_now == @cars_interval
-        @distance_per_car -= 0.5
-        @cars_from_now = @cars_outdated
-      end
-      if @player.collision?(@cars)
-        @main.play_sound(@car_brake)
-        @car_speed.stop
-        @alive = false
-        if @player.score > @main.data['high_scores'][-1]
-          @main.data['high_scores'] << @player.score
-          @main.data['high_scores'] = @main.data['high_scores'].sort.reverse.take(5)
+        if Gosu.button_down?(Gosu::KbLeft) || Gosu.button_down?(Gosu::GpLeft)
+          @player.move_left
+        elsif Gosu.button_down?(Gosu::KbRight) || Gosu.button_down?(Gosu::GpRight)
+          @player.move_right
+        elsif Gosu.button_down?(Gosu::KbUp) || Gosu.button_down?(Gosu::GpUp)
+          @player.accelerate
+          @cars.each(&:accelerate)
+          @road.accelerate
+        elsif Gosu.button_down?(Gosu::KbDown) || Gosu.button_down?(Gosu::GpDown)
+          @player.brake
+          @cars.each(&:brake)
+          @road.brake
+        else
+          @player.reset_angle
         end
-        @player.sample.stop if @player.sample
-      end
-      @player.set_score(millis / 226)
-      if millis - @last_millis > 500
-        @distance += @player.speed
-        @last_millis = millis
+        @road.move
+        @cars.each(&:move)
+        @cars.each_with_index do |car, i|
+          if car.y >= 512 + 140
+            car.sample.stop if car.sample
+            @cars[i] = nil
+            @cars_outdated += 1
+          end
+        end
+        @cars = @cars.compact
+        if @cars_outdated - @cars_from_now == @cars_interval
+          @distance_per_car -= 0.5
+          @cars_from_now = @cars_outdated
+        end
+        if @player.collision?(@cars)
+          @main.play_sound(@car_brake)
+          @car_speed.stop
+          @alive = false
+          if @player.score > @main.data['high_scores'][-1]
+            @main.data['high_scores'] << @player.score
+            @main.data['high_scores'] = @main.data['high_scores'].sort.reverse.take(5)
+          end
+          @player.sample.stop if @player.sample
+        end
+        @player.set_score(millis / 226)
+        if millis - @last_millis > 500
+          @distance += @player.speed
+          @last_millis = millis
+        end
       end
     end
   end
@@ -128,6 +136,8 @@ class GameState < State
     # end
     @gameover.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) unless @alive
     @gameover_image.draw(0, 0, ZOrder::Texture) unless @alive
+    @pause_text.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) if @paused
+    @pause_image.draw(0, 0, ZOrder::Texture) if @paused
   end
 
   def button_down(id)
@@ -141,6 +151,8 @@ class GameState < State
       @player.set_score(0)
       @player.sample.stop if @player.sample
       @main.state = 0
+    elsif id == Gosu::KbP
+        @paused = !@paused
     end
   end
 end
