@@ -36,6 +36,10 @@ class Car
     end
   end
 
+  def set_speed(speed)
+    @speed = speed
+  end
+
   def move
     @y += @speed
   end

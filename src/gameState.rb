@@ -24,6 +24,7 @@ class GameState < State
     @cars_outdated = 0
     @cars_interval = 10
     @cars_from_now = 0
+    @car_hit_distance = 145
 
     @interval = 2
     @score = 0
@@ -35,6 +36,7 @@ class GameState < State
     @player.warp(WIDTH / 2, HEIGHT - 90)
 
     @cars = []
+    @last_car = nil
 
     @alive = true
     @paused = false
@@ -89,14 +91,22 @@ class GameState < State
         end
         @road.move
         @cars.each(&:move)
+        @last_car = nil
         @cars.each_with_index do |car, i|
           if car.y >= 512 + 140
             car.sample.stop if car.sample
             @cars[i] = nil
             @cars_outdated += 1
           end
+          @last_car = car if @last_car == nil || @last_car.y < car.y + @car_hit_distance
         end
         @cars = @cars.compact
+        if @cars.size > 1 && @last_car != nil
+          @cars.each_with_index do |car, i|
+            @cars[i].set_speed(@last_car.speed) if @last_car.x == car.x && @last_car.y < car.y + @car_hit_distance
+          end
+          @last_car = nil
+        end
         if @cars_outdated - @cars_from_now == @cars_interval
           @distance_per_car -= 0.5
           @cars_from_now = @cars_outdated
