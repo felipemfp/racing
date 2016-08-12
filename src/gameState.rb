@@ -26,6 +26,7 @@ class GameState < State
     @cars_from_now = 0
 
     @interval = 2
+    @score = 0
     @score_label = @main.lang.score_label
 
     @road = Road.new
@@ -110,7 +111,9 @@ class GameState < State
           end
           @player.sample.stop if @player.sample
         end
-        @player.set_score(millis / 226)
+
+        @score += (millis / 226 * @player.speed) / 1000
+        @player.set_score(@score)
         if millis - @last_millis > 500
           @distance += @player.speed
           @last_millis = millis
@@ -123,7 +126,7 @@ class GameState < State
     @player.draw
     @road.draw
     @cars.each(&:draw)
-    @score_font.draw("#{@score_label}: #{@cars_outdated}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    @score_font.draw("#{@score_label}: #{@player.score.round(2)}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
     # @score_font.draw("Velocidade: #{@player.speed}", 10, 40, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
     # @score_font.draw("Distance: #{@distance}", 10, 60, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
     # @score_font.draw("Pista: #{@road.speed}", 10, 80, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
