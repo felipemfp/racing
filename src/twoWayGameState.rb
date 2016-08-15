@@ -28,7 +28,7 @@ class TwoWayGameState < GameState
       if !@paused
         if @distance - @distance_per_car > @distance_last_car
           next_car = CARS.sample
-          car = Car.new(next_car[0], next_car[1], @player.speed)
+          car = Car.new(next_car[0], next_car[1], @player.speed, [140.0, 215.0, 300.0, 375.0], true)
           if car.song
             car.sample = @main.play_sound(car.song, true, 0.3)
           end
@@ -119,15 +119,6 @@ class TwoWayGameState < GameState
     @score_font.draw("#{@score_label}: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
     @gameover.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) unless @alive
     @gameover_image.draw(0, 0, ZOrder::Cover) unless @alive
-    @pause_text.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) if @paused
-    @pause_image.draw(0, 0, ZOrder::Cover) if @paused
-  end
-
-  def button_down(id)
-    if id == Gosu::KbEscape || id == Gosu::GpButton1 || !@alive
-      @main.state = 0
-    elsif id == Gosu::KbP
-      @paused = !@paused
-    end
+    super
   end
 end

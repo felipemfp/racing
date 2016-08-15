@@ -2,16 +2,20 @@ class Car
   attr_reader :x, :y, :song, :speed
   attr_accessor :sample
 
-  def initialize(animation_file, song_file, player_speed)
-    pos = [180.0, 255.0, 330.0]
+  def initialize(animation_file, song_file, player_speed, pos=[180.0, 255.0, 330.0], inverted=false)
     @animation = Gosu::Image.load_tiles(animation_file, 140, 140)
     @song = Gosu::Sample.new(song_file) if song_file
-    @x = pos.sample
     @y = rand(100.0..170.0) * -1
-    @angle = 0.0
-    @speed = rand(2.0..3.0) + player_speed
-    @speed_limit = 10
-    @speed_minimun = 2.0
+    if inverted
+      @angle = [0.0, 180.0].sample
+      @x = @angle == 180.0 ? pos[0..1].sample : pos[2..3].sample
+    else
+      @angle = 0.0
+      @x = pos.sample
+    end
+    @speed = (@angle == 180.0 ? rand(6.0..7.0) : rand(2.0..3.0)) + player_speed
+    @speed_limit = @angle == 180.0 ? 2.0 : 10.0
+    @speed_minimun = @angle == 180.0 ? 10.0 : 2.0
     @acceleration = [1.05, 0.95]
   end
 
@@ -24,7 +28,7 @@ class Car
     if @speed > @speed_limit
       @speed = @speed_limit
     else
-      @speed *= @acceleration[0]
+      @speed *= @acceleration[@angle == 180.0 ? 1 : 0]
     end
   end
 
@@ -32,7 +36,7 @@ class Car
     if @speed < @speed_minimun
       @speed = @speed_minimun
     else
-      @speed *= @acceleration[1]
+      @speed *= @acceleration[@angle == 180.0 ? 0 : 1]
     end
   end
 
