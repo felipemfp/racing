@@ -68,7 +68,7 @@ class Player
         else
           return true if car.x - @x < 50 && @y - car.y < 110
         end
-        end
+      end
     end
     false
   end

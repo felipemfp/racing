@@ -7,6 +7,7 @@ require_relative 'car'
 require_relative 'road'
 require_relative 'lang'
 require_relative 'menuState'
+require_relative 'gameState'
 require_relative 'oneWayGameState'
 require_relative 'highScoresState'
 require_relative 'garageState'
@@ -26,7 +27,7 @@ CARS = [
 ].freeze
 
 module ZOrder
-  Background, Texture, Cars, Player, UI = *0..4
+  Background, Texture, Cars, Player, Cover, UI = *0..5
 end
 
 class MainWindow < Gosu::Window

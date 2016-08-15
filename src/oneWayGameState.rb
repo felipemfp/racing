@@ -1,19 +1,7 @@
-class OneWayGameState < State
+class OneWayGameState < GameState
   def initialize(options = {})
     super options
 
-    @score_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
-    @gameover = Gosu::Image.from_text(
-      @main.lang.data['game_over'].sample, 45, font: 'src/media/fonts/NeedforFont.ttf'
-    )
-    @gameover_image = Gosu::Image.new('src/media/images/gameover.png', tileable: true)
-
-    @pause_text = Gosu::Image.from_text(
-      @main.lang.pause_text, 45, font: 'src/media/fonts/NeedforFont.ttf'
-    )
-    @pause_image = Gosu::Image.new('src/media/images/shade.png', tileable: true)
-
-    @initial_millis = Gosu.milliseconds
     @last_millis = millis
     @cars_interval = 7500
 
@@ -27,31 +15,12 @@ class OneWayGameState < State
     @car_hit_distance = 145
 
     @interval = 2
-    @score = 0
-    @score_label = @main.lang.score_label
+    @road = Road.new('src/media/images/background.png')
 
-    @road = Road.new
-
-    @player = Player.new(CARS[@main.data['current_car']][0], CARS[@main.data['current_car']][1])
     @player.warp(WIDTH / 2, HEIGHT - 90)
 
     @cars = []
     @last_car = nil
-
-    @alive = true
-    @paused = false
-
-    @car_brake = Gosu::Sample.new('src/media/sounds/car-brake.wav')
-    @car_speed = Gosu::Song.new('src/media/sounds/car-speed.wav')
-
-    @main.play_sound(@car_speed, true)
-    if @player.song
-      @player.sample = @main.play_sound(@player.song, true, 0.5)
-    end
-  end
-
-  def millis
-    Gosu.milliseconds - @initial_millis
   end
 
   def update
@@ -74,6 +43,7 @@ class OneWayGameState < State
           @cars_interval -= 250 if @cars_interval > 1500
           @interval *= 1.2
         end
+
         if Gosu.button_down?(Gosu::KbLeft) || Gosu.button_down?(Gosu::GpLeft)
           @player.move_left
         elsif Gosu.button_down?(Gosu::KbRight) || Gosu.button_down?(Gosu::GpRight)
@@ -91,28 +61,34 @@ class OneWayGameState < State
           @cars.each(&:brake)
           @road.brake
         end
+
         @road.move
         @cars.each(&:move)
         @last_car = nil
-        @cars.each_with_index do |car, i|
+
+        @cars.reject! {|car|
+          reject = false
           if car.y >= 512 + 140
             car.sample.stop if car.sample
-            @cars[i] = nil
             @cars_outdated += 1
+            reject = true
           end
           @last_car = car if @last_car == nil || @last_car.y < car.y + @car_hit_distance
-        end
-        @cars = @cars.compact
+          reject
+        }
+
         if @cars.size > 1 && @last_car != nil
           @cars.each_with_index do |car, i|
             @cars[i].set_speed(@last_car.speed) if @last_car.x == car.x && @last_car.y < car.y + @car_hit_distance
           end
           @last_car = nil
         end
+
         if @cars_outdated - @cars_from_now == @cars_interval
           @distance_per_car -= 0.5
           @cars_from_now = @cars_outdated
         end
+
         if @player.collision?(@cars)
           @main.play_sound(@car_brake)
           @car_speed.stop
@@ -127,6 +103,7 @@ class OneWayGameState < State
         @score += (millis / 226 * @player.speed) / 1000
         @score = @score.to_f.round(2)
         @player.set_score(@score)
+
         if millis - @last_millis > 500
           @distance += @player.speed
           @last_millis = millis
@@ -140,20 +117,10 @@ class OneWayGameState < State
     @road.draw
     @cars.each(&:draw)
     @score_font.draw("#{@score_label}: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    # @score_font.draw("Velocidade: #{@player.speed}", 10, 40, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    # @score_font.draw("Distance: #{@distance}", 10, 60, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    # @score_font.draw("Pista: #{@road.speed}", 10, 80, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    # @score_font.draw("Limite: #{@distance_per_car}", 10, 100, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    # @score_font.draw("Last: #{@distance_last_car}", 10, 120, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    # @score_font.draw("Ultrapassados: #{@cars_outdated}", 10, 140, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    # @score_font.draw("dasdas: #{@cars_from_now}", 10, 160, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    # if @cars.size > 0
-    #   @score_font.draw("Carro: #{@cars[0].speed}", 10, 200, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    # end
     @gameover.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) unless @alive
     @gameover_image.draw(0, 0, ZOrder::Texture) unless @alive
     @pause_text.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) if @paused
-    @pause_image.draw(0, 0, ZOrder::Texture) if @paused
+    @pause_image.draw(0, 0, ZOrder::Cover) if @paused
   end
 
   def button_down(id)
@@ -169,6 +136,7 @@ class OneWayGameState < State
       @main.state = 0
     elsif id == Gosu::KbP
         @paused = !@paused
+        puts(@cars.size)
     end
   end
 end
