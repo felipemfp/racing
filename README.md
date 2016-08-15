@@ -21,7 +21,8 @@ ruby run.rb
 
 ## Thanks...
 
-* [background.png](src/media/images/background.png) by [Ajay Badgujar](http://www.ajaybadgujar.com/chapter/creating-2d-car-racing-game-in-android-part-3-adding-road-track-texture/road/)
+* [background-one.png](src/media/images/background-one.png) by [Ajay Badgujar](http://www.ajaybadgujar.com/chapter/creating-2d-car-racing-game-in-android-part-3-adding-road-track-texture/road/)
+* [background-two.png](src/media/images/background-two.png) by [Alucard](http://opengameart.org/content/2d-top-down-highway-background)
 * [menu-bg.jpg](src/media/images/menu-bg.jpg) by [Playground Games](http://wallpapershome.ru/avto-i-moto/gonochnie/forza-igra-mashina-krasnaya-zakat-doroga-trassa-skorost-2007.html)
 * [high-scores-bg.jpg](src/media/images/high-scores-bg.jpg) by [HD Wallpapers Act](http://www.hdwallpapersact.com/street-racing-car-wallpapers/)
 * [garage-bg.jpg](src/media/images/garage-bg.jpg) by [Wallpapers Craft](https://wallpaperscraft.com/download/cars_style_lamborghini_orange_garage_85226/1920x1080)

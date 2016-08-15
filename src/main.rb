@@ -9,6 +9,7 @@ require_relative 'lang'
 require_relative 'menuState'
 require_relative 'gameState'
 require_relative 'oneWayGameState'
+require_relative 'twoWayGameState'
 require_relative 'highScoresState'
 require_relative 'garageState'
 require_relative 'optionsState'
@@ -40,7 +41,7 @@ class MainWindow < Gosu::Window
 
     @states = [
       MenuState,
-      OneWayGameState,
+      TwoWayGameState,
       HighScoresState,
       GarageState,
       OptionsState
@@ -70,7 +71,7 @@ class MainWindow < Gosu::Window
     @current_state.button_down(id)
   end
 
-  def play_sound(_song, _loop = false, _volume = 1, _speed = 1)
+  def play_sound(_song, _loop = false, _volume = 1.0, _speed = 1.0)
     if _song.is_a? Gosu::Song
       _song.play(_loop) if @is_sound_enable
     else

@@ -1,4 +1,4 @@
-class OneWayGameState < GameState
+class TwoWayGameState < GameState
   def initialize(options = {})
     super options
 
@@ -15,9 +15,9 @@ class OneWayGameState < GameState
     @car_hit_distance = 145
 
     @interval = 2
-    @road = Road.new('src/media/images/background-one.png')
+    @road = Road.new('src/media/images/background-two.png')
 
-    @player.warp(WIDTH / 2, HEIGHT - 90)
+    @player.warp(WIDTH / 2 + 70, HEIGHT - 90)
 
     @cars = []
     @last_car = nil
