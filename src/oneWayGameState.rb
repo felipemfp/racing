@@ -119,24 +119,54 @@ class OneWayGameState < GameState
     @score_font.draw("#{@score_label}: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
     @gameover.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) unless @alive
     @gameover_image.draw(0, 0, ZOrder::Texture) unless @alive
-    @pause_text.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) if @paused
-    @pause_image.draw(0, 0, ZOrder::Cover) if @paused
+
+    if @paused
+      @pause_image.draw(0, 0, ZOrder::Texture)
+
+      @pause_options.each_with_index do |option, i|
+        caption = option
+        caption = '  ' + caption if i == @current_option
+
+        top_margin = @margins[1] + (@margins[2] * i)
+        @pause_font.draw(caption, @margins[0], top_margin, ZOrder::UI)
+      end
+    end
   end
 
   def button_down(id)
-    if id == Gosu::KbEscape || id == Gosu::GpButton1 || !@alive
-      @car_speed.stop
-      @cars.each do |car|
-        car.sample.stop if car.sample
-        car = nil
-      end
-      @cars = @cars.compact
-      @player.set_score(0)
-      @player.sample.stop if @player.sample
-      @main.state = 0
-    elsif id == Gosu::KbP
+    if !@alive
+      stop_game
+    else
+      if id == Gosu::KbEscape || id == Gosu::GpButton1
         @paused = !@paused
-        puts(@cars.size)
+      end
+      if @paused
+        if id == Gosu::KbDown || id == Gosu::GpDown
+          @current_option += 1
+          @current_option = 0 if @current_option >= @pause_options.size
+        elsif id == Gosu::KbUp || id == Gosu::GpUp
+          @current_option -= 1
+          @current_option = @pause_options.size - 1 if @current_option < 0
+        elsif id == Gosu::KbReturn || id == Gosu::GpButton2
+          if @current_option == @pause_options.size - 1
+            stop_game
+          else
+            @paused = false
+          end
+        end
+      end
     end
+  end
+
+  def stop_game
+    @car_speed.stop
+    @cars.each do |car|
+      car.sample.stop if car.sample
+      car = nil
+    end
+    @cars = @cars.compact
+    @player.set_score(0)
+    @player.sample.stop if @player.sample
+    @main.state = 0
   end
 end

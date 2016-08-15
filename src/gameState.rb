@@ -8,10 +8,11 @@ class GameState < State
     )
     @gameover_image = Gosu::Image.new('src/media/images/gameover.png', tileable: true)
 
-    @pause_text = Gosu::Image.from_text(
-      @main.lang.pause_text, 45, font: 'src/media/fonts/NeedforFont.ttf'
-    )
+    @pause_font = Gosu::Font.new(25, name: 'src/media/fonts/Play-Regular.ttf')
     @pause_image = Gosu::Image.new('src/media/images/shade.png', tileable: true)
+    @pause_options = @main.lang.pause_options
+    @current_option = 0
+    @margins = [30, HEIGHT - 100, 30]
 
     @initial_millis = Gosu.milliseconds
 

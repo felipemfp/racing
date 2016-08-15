@@ -75,8 +75,8 @@ class Lang
     return @data['options_sound']
   end
 
-  def pause_text
-    return @data['pause_text']
+  def pause_options
+    return @data['pause_options']
   end
 
 end
