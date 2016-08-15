@@ -37,12 +37,16 @@ class GameState < State
     Gosu.milliseconds - @initial_millis
   end
 
-  def leave_game
+  def stop_sounds
     @car_speed.stop
     @cars.each do |car|
       car.sample.stop if car.sample
     end
     @player.sample.stop if @player.sample
+  end
+
+  def leave_game
+    stop_sounds
     @main.state = 0
   end
 
@@ -78,6 +82,7 @@ class GameState < State
           when @pause_options.size - 1
             leave_game
           when 1
+            stop_sounds
             @main.restart
           else
             @paused = false
