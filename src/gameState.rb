@@ -38,6 +38,11 @@ class GameState < State
   end
 
   def leave_game
+    @car_speed.stop
+    @cars.each do |car|
+      car.sample.stop if car.sample
+    end
+    @player.sample.stop if @player.sample
     @main.state = 0
   end
 

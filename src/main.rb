@@ -8,6 +8,7 @@ require_relative 'road'
 require_relative 'lang'
 require_relative 'menuState'
 require_relative 'gameState'
+require_relative 'scenarioState'
 require_relative 'oneWayGameState'
 require_relative 'twoWayGameState'
 require_relative 'highScoresState'
@@ -41,10 +42,12 @@ class MainWindow < Gosu::Window
 
     @states = [
       MenuState,
-      OneWayGameState,
+      ScenarioState,
       HighScoresState,
       GarageState,
-      OptionsState
+      OptionsState,
+      OneWayGameState,
+      TwoWayGameState
     ]
     @state = 0
     @last_state = @state
