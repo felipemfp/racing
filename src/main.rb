@@ -101,6 +101,10 @@ class MainWindow < Gosu::Window
     end
   end
 
+  def restart
+    @current_state = @states[@state].new(main: self)
+  end
+
   def close
     @data['config']['sound'] = @is_sound_enable
     File.open('src/data/data.json', 'w') do |f|

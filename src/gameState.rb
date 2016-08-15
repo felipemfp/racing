@@ -74,8 +74,11 @@ class GameState < State
           @current_option -= 1
           @current_option = @pause_options.size - 1 if @current_option < 0
         elsif id == Gosu::KbReturn || id == Gosu::GpButton2
-          if @current_option == @pause_options.size - 1
+          case @current_option
+          when @pause_options.size - 1
             leave_game
+          when 1
+            @main.restart
           else
             @paused = false
           end

@@ -53,5 +53,6 @@
   ],
   "pause_options": [
     "Continue",
+    "Restart",
     "Exit"]
 }
