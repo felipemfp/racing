@@ -28,7 +28,7 @@ CARS = [
 ].freeze
 
 module ZOrder
-  Background, Texture, Cars, Player, Cover, UI = *0..5
+  Background, Cars, Player, Cover, UI = *0..4
 end
 
 class MainWindow < Gosu::Window
@@ -41,7 +41,7 @@ class MainWindow < Gosu::Window
 
     @states = [
       MenuState,
-      TwoWayGameState,
+      OneWayGameState,
       HighScoresState,
       GarageState,
       OptionsState

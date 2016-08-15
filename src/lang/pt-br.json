@@ -51,5 +51,7 @@
     "Ligado",
     "Desligado"
   ],
-  "pause_text": "Jogo Pausado"
+  "pause_options": [
+    "Continuar",
+    "Sair"]
 }

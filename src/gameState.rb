@@ -8,10 +8,11 @@ class GameState < State
     )
     @gameover_image = Gosu::Image.new('src/media/images/gameover.png', tileable: true)
 
-    @pause_text = Gosu::Image.from_text(
-      @main.lang.pause_text, 45, font: 'src/media/fonts/NeedforFont.ttf'
-    )
+    @pause_font = Gosu::Font.new(25, name: 'src/media/fonts/Play-Regular.ttf')
     @pause_image = Gosu::Image.new('src/media/images/shade.png', tileable: true)
+    @pause_options = @main.lang.pause_options
+    @current_option = 0
+    @margins = [30, HEIGHT - 100, 30]
 
     @initial_millis = Gosu.milliseconds
 
@@ -34,5 +35,47 @@ class GameState < State
 
   def millis
     Gosu.milliseconds - @initial_millis
+  end
+
+  def leave_game
+    @main.state = 0
+  end
+
+  def draw
+    if @paused
+      @pause_image.draw(0, 0, ZOrder::Cover)
+
+      @pause_options.each_with_index do |option, i|
+        caption = option
+        caption = '  ' + caption if i == @current_option
+        top_margin = @margins[1] + (@margins[2] * i)
+        @pause_font.draw(caption, @margins[0], top_margin, ZOrder::UI)
+      end
+    end
+  end
+
+  def button_down(id)
+    if !@alive
+      leave_game
+    else
+      if id == Gosu::KbEscape || id == Gosu::GpButton1
+        @paused = !@paused
+      end
+      if @paused
+        if id == Gosu::KbDown || id == Gosu::GpDown
+          @current_option += 1
+          @current_option = 0 if @current_option >= @pause_options.size
+        elsif id == Gosu::KbUp || id == Gosu::GpUp
+          @current_option -= 1
+          @current_option = @pause_options.size - 1 if @current_option < 0
+        elsif id == Gosu::KbReturn || id == Gosu::GpButton2
+          if @current_option == @pause_options.size - 1
+            leave_game
+          else
+            @paused = false
+          end
+        end
+      end
+    end
   end
 end

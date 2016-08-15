@@ -51,5 +51,7 @@
     "On",
     "Off"
   ],
-  "pause_text": "Paused"
+  "pause_options": [
+    "Continue",
+    "Exit"]
 }
