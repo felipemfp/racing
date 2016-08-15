@@ -7,7 +7,7 @@ require_relative 'car'
 require_relative 'road'
 require_relative 'lang'
 require_relative 'menuState'
-require_relative 'gameState'
+require_relative 'oneWayGameState'
 require_relative 'highScoresState'
 require_relative 'garageState'
 require_relative 'optionsState'
@@ -39,7 +39,7 @@ class MainWindow < Gosu::Window
 
     @states = [
       MenuState,
-      GameState,
+      OneWayGameState,
       HighScoresState,
       GarageState,
       OptionsState

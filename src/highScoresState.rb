@@ -40,7 +40,8 @@ class HighScoresState < State
     if id == Gosu::KbReturn || id == Gosu::GpButton2
       case @current_option
       when 0
-        @scores = [0, 0, 0, 0, 0]
+        @main.data['high_scores'] = [0, 0, 0, 0, 0]
+        @scores = @main.data['high_scores']
       when 1
         @main.state = 0
         end

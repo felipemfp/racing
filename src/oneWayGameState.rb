@@ -1,4 +1,4 @@
-class GameState < State
+class OneWayGameState < State
   def initialize(options = {})
     super options
 
@@ -78,7 +78,11 @@ class GameState < State
           @player.move_left
         elsif Gosu.button_down?(Gosu::KbRight) || Gosu.button_down?(Gosu::GpRight)
           @player.move_right
-        elsif Gosu.button_down?(Gosu::KbUp) || Gosu.button_down?(Gosu::GpUp)
+        else
+          @player.reset_angle
+        end
+
+        if Gosu.button_down?(Gosu::KbUp) || Gosu.button_down?(Gosu::GpUp)
           @player.accelerate
           @cars.each(&:accelerate)
           @road.accelerate
@@ -86,8 +90,6 @@ class GameState < State
           @player.brake
           @cars.each(&:brake)
           @road.brake
-        else
-          @player.reset_angle
         end
         @road.move
         @cars.each(&:move)
@@ -123,6 +125,7 @@ class GameState < State
         end
 
         @score += (millis / 226 * @player.speed) / 1000
+        @score = @score.to_f.round(2)
         @player.set_score(@score)
         if millis - @last_millis > 500
           @distance += @player.speed
@@ -136,7 +139,7 @@ class GameState < State
     @player.draw
     @road.draw
     @cars.each(&:draw)
-    @score_font.draw("#{@score_label}: #{@player.score.round(2)}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
+    @score_font.draw("#{@score_label}: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
     # @score_font.draw("Velocidade: #{@player.speed}", 10, 40, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
     # @score_font.draw("Distance: #{@distance}", 10, 60, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
     # @score_font.draw("Pista: #{@road.speed}", 10, 80, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
