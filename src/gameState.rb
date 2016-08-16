@@ -99,11 +99,11 @@ class GameState < State
           @player.reset_angle
         end
 
-        if Gosu.button_down?(Gosu::KbUp) || Gosu.button_down?(Gosu::GpUp)
+        if Gosu.button_down?(Gosu::KbUp) || Gosu.button_down?(Gosu::GpButton2)
           @player.accelerate
           @cars.each(&:accelerate)
           @road.accelerate
-        elsif Gosu.button_down?(Gosu::KbDown) || Gosu.button_down?(Gosu::GpDown)
+        elsif Gosu.button_down?(Gosu::KbDown) || Gosu.button_down?(Gosu::GpButton3)
           @player.brake
           @cars.each(&:brake)
           @road.brake
@@ -112,9 +112,9 @@ class GameState < State
         @road.move
         @cars.each(&:move)
 
-        @score += (millis / 226 * @player.speed) / 1000
+        @score += ((millis / 226 * @player.speed) / 1000)
         @score = @score.to_f.round(2)
-        @player.set_score(@score)
+        @player.set_score(@score.to_i)
 
         if @player.collision?(@cars)
           @main.play_sound(@car_brake)

@@ -46,13 +46,13 @@ class Player
 
   def move_left
     @angle = -5.0
-    @x -= @speed
+    @x -= @speed * 1.25
     @x = @margin_left if @x <= @margin_left
   end
 
   def move_right
     @angle = 5.0
-    @x += @speed
+    @x += @speed * 1.25
     @x = @margin_right if @x >= @margin_right
   end
 
