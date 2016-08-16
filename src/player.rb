@@ -2,15 +2,17 @@ class Player
   attr_reader :score, :song, :speed
   attr_accessor :sample
 
-  def initialize(animation_file, song_file)
+  def initialize(animation_file, song_file, margin_left, margin_right)
     @animation = Gosu::Image.load_tiles(animation_file, 140, 140)
     @song = Gosu::Sample.new(song_file) if song_file
-    @x, @y, @angle = 0.0
+    @x, @y, @angle = 0.0, 0.0, 0.0
     @score = 0
     @speed = 1.0
     @speed_limit = 3.5
     @speed_minimun = 1.0
     @acceleration = [1.025,0.975]
+    @margin_left = margin_left
+    @margin_right = margin_right
   end
 
   def warp(x, y)
@@ -45,13 +47,13 @@ class Player
   def move_left
     @angle = -5.0
     @x -= @speed
-    @x = 175.0 if @x <= 175.0
+    @x = @margin_left if @x <= @margin_left
   end
 
   def move_right
     @angle = 5.0
     @x += @speed
-    @x = 335.0 if @x >= 335.0
+    @x = @margin_right if @x >= @margin_right
   end
 
   def collision?(cars)
