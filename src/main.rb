@@ -29,7 +29,7 @@ CARS = [
 ].freeze
 
 module ZOrder
-  Background, Cars, Player, Cover, UI = *0..4
+  Background, Cars, Player, Element, Cover, UI = *0..5
 end
 
 class MainWindow < Gosu::Window

@@ -25,6 +25,9 @@ class GameState < State
     @car_brake = Gosu::Sample.new('src/media/sounds/car-brake.wav')
     @car_speed = Gosu::Song.new('src/media/sounds/car-speed.wav')
 
+    @speedometer = Gosu::Image.new('src/media/images/speedometer.png')
+    @speedometer_pointer = Gosu::Image.new('src/media/images/speedometer-pointer.png')
+
     @main.play_sound(@car_speed, true)
 
     @player = Player.new(CARS[@main.data['current_car']][0], CARS[@main.data['current_car']][1])
@@ -51,6 +54,8 @@ class GameState < State
   end
 
   def draw
+    @speedometer.draw_rot(WIDTH - 80 , HEIGHT - 80, ZOrder::Element, 0.0)
+    @speedometer_pointer.draw_rot(WIDTH - 80, HEIGHT - 80, ZOrder::Element, speedometer_angle)
     if @paused
       @pause_image.draw(0, 0, ZOrder::Cover)
 
@@ -90,5 +95,11 @@ class GameState < State
         end
       end
     end
+  end
+
+  def speedometer_angle
+    oldrange = 3.5 - 1.0
+    newrange = 75 - (-90)
+    ((@player.speed - 1.0) * newrange) / oldrange + (-90)
   end
 end
