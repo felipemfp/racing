@@ -1,5 +1,5 @@
 class Car
-  attr_reader :x, :y, :song, :speed
+  attr_reader :x, :y, :song, :speed, :angle
   attr_accessor :sample
 
   def initialize(animation_file, song_file, player_speed, pos=[180.0, 255.0, 330.0], inverted=false)
@@ -14,8 +14,8 @@ class Car
       @x = pos.sample
     end
     @speed = (@angle == 180.0 ? rand(6.0..7.0) : rand(2.0..3.0)) + player_speed
-    @speed_limit = @angle == 180.0 ? 2.0 : 10.0
-    @speed_minimun = @angle == 180.0 ? 10.0 : 2.0
+    @speed_limit = @angle == 180.0 ? 15.0 : 10.0
+    @speed_minimun = @angle == 180.0 ? 6.0 : 2.0
     @acceleration = [1.05, 0.95]
   end
 

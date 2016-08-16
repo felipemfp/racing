@@ -20,7 +20,8 @@ class TwoWayGameState < GameState
     @player.warp(WIDTH / 2 + 70, HEIGHT - 90)
 
     @cars = []
-    @last_car = nil
+    @last_going_car = nil
+    @last_coming_car = nil
   end
 
   def update
@@ -36,6 +37,7 @@ class TwoWayGameState < GameState
           @last_millis = millis
           @distance_last_car = @distance
         end
+
         if millis / 1000 > @interval
           @road.accelerate
           @player.accelerate
@@ -64,7 +66,8 @@ class TwoWayGameState < GameState
 
         @road.move
         @cars.each(&:move)
-        @last_car = nil
+        @last_going_car = nil
+        @last_coming_car = nil
 
         @cars.reject! {|car|
           reject = false
@@ -73,15 +76,24 @@ class TwoWayGameState < GameState
             @cars_outdated += 1
             reject = true
           end
-          @last_car = car if @last_car == nil || @last_car.y < car.y + @car_hit_distance
+          if car.angle == 180
+            @last_coming_car = car if @last_coming_car == nil || @last_coming_car.y < car.y + @car_hit_distance
+          else
+            @last_going_car = car if @last_going_car == nil || @last_going_car.y < car.y + @car_hit_distance
+          end
           reject
         }
 
-        if @cars.size > 1 && @last_car != nil
+        if @cars.size > 1 && (@last_going_car != nil || @last_coming_car)
           @cars.each_with_index do |car, i|
-            @cars[i].set_speed(@last_car.speed) if @last_car.x == car.x && @last_car.y < car.y + @car_hit_distance
+            if car.angle == 180
+              @cars[i].set_speed(@last_coming_car.speed) if @last_coming_car.x == car.x && @last_coming_car.y < car.y + @car_hit_distance
+            else
+              @cars[i].set_speed(@last_going_car.speed) if @last_going_car.x == car.x && @last_going_car.y < car.y + @car_hit_distance
+            end
           end
-          @last_car = nil
+          @last_going_car = nil
+          @last_coming_car = nil
         end
 
         if @cars_outdated - @cars_from_now == @cars_interval
