@@ -1,0 +1,58 @@
+{
+  "language": "Português",
+  "menu": [
+    "Iniciar",
+    "Recordes",
+    "Garagem",
+    "Opções",
+    "Sair"
+  ],
+  "game_over": [
+    "FIM DE JOGO",
+    "QUE OTÁRIO!",
+    "QUE IMBECIL!",
+    "Você vai\npagar por\nisso!",
+    "Ei!\nNão faça isso!",
+    "Presta atenção!",
+    "Sai da frente,\nimbecil!",
+    "Mas que\np***a, idiota!",
+    "Fica na\nsua faixa!",
+    "Acelerador\nnão é brinquedo\nnão!",
+    "Você é\num idiota!",
+    "Vê se aprende\na dirigir!",
+    "Obrigado por\nme cortar!",
+    "VOCÊ TÁ CEGO?"
+  ],
+  "score_label": "Pontuação",
+  "option_back": "Voltar",
+  "option_clear": "Limpar",
+  "high_scores": [
+    "1°",
+    "2°",
+    "3°",
+    "4°",
+    "5°"
+  ],
+  "cars_option": [
+    "Padrão",
+    "Ambulância",
+    "Audi",
+    "Viper Preto",
+    "Picape",
+    "Mini Van",
+    "Polícia",
+    "Táxi"
+  ],
+  "options": [
+    "Idioma",
+    "Som"
+  ],
+  "options_sound": [
+    "Ligado",
+    "Desligado"
+  ],
+  "pause_options": [
+    "Continuar",
+    "Reiniciar",
+    "Sair"]
+}
