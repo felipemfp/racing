@@ -6,7 +6,8 @@ class GameState < State
       player_margin_right: 335.0,
       cars_inverted: false,
       cars_pos: [180.0, 255.0, 330.0],
-      cars_per_time: 1
+      cars_per_time: 1,
+      cars_move: false
     }.merge(options)
 
     @score_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
@@ -74,7 +75,7 @@ class GameState < State
       if !@paused
         if @distance - @distance_per_car > @distance_last_car
           next_car = CARS.sample
-          car = Car.new(next_car[0], next_car[1], @player.speed, @options[:cars_pos], @options[:cars_inverted])
+          car = Car.new(next_car[0], next_car[1], @player.speed, @options[:cars_pos], @options[:cars_inverted], @options[:cars_move])
           if car.song
             car.sample = @main.play_sound(car.song, true, 0.3)
           end

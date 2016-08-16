@@ -5,7 +5,8 @@ class TwoWayGameState < GameState
       player_margin_right: 385.0,
       cars_inverted: true,
       cars_pos: [140.0, 215.0, 300.0, 375.0],
-      cars_per_time: 2
+      cars_per_time: 2,
+      cars_move: true
     }.merge(options))
 
     @cars_interval = 7500
