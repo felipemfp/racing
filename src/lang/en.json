@@ -23,6 +23,7 @@
     "Thanks for\ncutting me\noff!",
     "Blinker?"
   ],
+  "new_score": "Congrats!\nNew score!",
   "score_label": "Score",
   "option_back": "Back",
   "option_clear": "Clear",
@@ -45,7 +46,8 @@
   ],
   "options": [
     "Language",
-    "Sound"
+    "Sound",
+    "Difficulty"
   ],
   "options_sound": [
     "On",
@@ -54,5 +56,13 @@
   "pause_options": [
     "Continue",
     "Restart",
-    "Exit"]
+    "Exit"
+  ],
+  "easy": "Easy",
+  "normal": "Normal",
+  "hard": "Hard",
+  "very_hard": "Very hard",
+  "countdown": [
+    "3", "2", "1", "GO!"
+  ]
 }

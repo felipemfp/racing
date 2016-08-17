@@ -23,6 +23,7 @@
     "Obrigado por\nme cortar!",
     "VOCÊ TÁ CEGO?"
   ],
+  "new_score": "Parabéns!\nNovo recorde!",
   "score_label": "Pontuação",
   "option_back": "Voltar",
   "option_clear": "Limpar",
@@ -45,7 +46,8 @@
   ],
   "options": [
     "Idioma",
-    "Som"
+    "Som",
+    "Dificuldade"
   ],
   "options_sound": [
     "Ligado",
@@ -54,5 +56,13 @@
   "pause_options": [
     "Continuar",
     "Reiniciar",
-    "Sair"]
+    "Sair"
+  ],
+  "easy": "Fácil",
+  "normal": "Normal",
+  "hard": "Difícil",
+  "very_hard": "Muito difícil",
+  "countdown": [
+    "3", "2", "1", "VAI!"
+  ]
 }

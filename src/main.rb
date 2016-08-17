@@ -101,6 +101,15 @@ class MainWindow < Gosu::Window
     end
   end
 
+  def current_difficulty
+    difficulty = @data['config']['difficulty'][@data['config']['current_difficulty']]
+    return {
+      cars_wave: difficulty['cars_wave'],
+      cars_move: difficulty['cars_move'],
+      score_factor: difficulty['score_factor']
+    }
+  end
+
   def restart
     @current_state = @states[@state].new(main: self)
   end

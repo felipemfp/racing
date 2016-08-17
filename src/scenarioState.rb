@@ -1,7 +1,7 @@
 class ScenarioState < State
   def initialize(options = {})
     super options
-    @current_option = 0
+    @current_option = @main.data['last_scenario']
     @background = Gosu::Image.new('src/media/images/scenario-bg.jpg', tileable: true)
     @select = Gosu::Image.new('src/media/images/select.png')
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
@@ -23,6 +23,7 @@ class ScenarioState < State
 
   def button_down(id)
     if id == Gosu::KbReturn || id == Gosu::GpButton2
+      @main.data['last_scenario'] = @current_option
       case @current_option
       when 0
         @main.state = 5
