@@ -43,6 +43,8 @@ class GameState < State
     end
 
     @player.warp(WIDTH / 2, HEIGHT - 90)
+
+    @current_wave = 0
     @cars = []
   end
 
@@ -63,24 +65,36 @@ class GameState < State
     @main.state = 0
   end
 
+  def get_next_car
+    next_car = CARS.sample
+    if @options[:cars_angle].size == 1
+      car = Car.new(next_car[0], next_car[1], @player.speed, @options[:cars_pos], @options[:cars_angle][0], [false, @options[:cars_move]].sample)
+    else
+      next_angle = rand(@options[:cars_angle].size)
+      next_pos = @options[:cars_pos][next_angle * 2..next_angle * 2 + 1]
+      car = Car.new(next_car[0], next_car[1], @player.speed, next_pos, @options[:cars_angle][next_angle], [false, @options[:cars_move]].sample)
+    end
+    car
+  end
+
   def update
     if @alive
       if !@paused
-        if @distance - @distance_per_car > @distance_last_car
-          next_car = CARS.sample
-          if @options[:cars_angle].size == 1
-            car = Car.new(next_car[0], next_car[1], @player.speed, @options[:cars_pos], @options[:cars_angle][0], [false, @options[:cars_move]].sample)
-          else
-            next_angle = rand(@options[:cars_angle].size)
-            next_pos = @options[:cars_pos][next_angle * 2..next_angle * 2 + 1]
-            car = Car.new(next_car[0], next_car[1], @player.speed, next_pos, @options[:cars_angle][next_angle], [false, @options[:cars_move]].sample)
+        if @distance - @distance_per_car > @distance_last_car || @current_wave < @options[:cars_wave]
+          if @current_wave < @options[:cars_wave]
+            next_car = get_next_car
+            if @cars.size == 0 || (next_car.x != @cars[-1].x && next_car.stop_x != @cars[-1].x && next_car.x != @cars[-1].stop_x)
+              if next_car.song
+                next_car.sample = @main.play_sound(next_car.song, true, 0.3)
+              end
+              @cars << next_car
+              @current_wave += 1
+            end
+            @last_millis = millis
+            @distance_last_car = @distance
+          elsif @current_wave == @options[:cars_wave]
+            @current_wave = 0
           end
-          if car.song
-            car.sample = @main.play_sound(car.song, true, 0.3)
-          end
-          @cars << car
-          @last_millis = millis
-          @distance_last_car = @distance
         end
 
         if millis / 1000 > @interval

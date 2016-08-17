@@ -5,7 +5,7 @@ class TwoWayGameState < GameState
       player_margin_right: 385.0,
       cars_angle: [180.0, 0.0],
       cars_pos: [140.0, 215.0, 300.0, 375.0],
-      cars_per_time: 2,
+      cars_wave: 2,
       cars_move: true
     }.merge(options))
 

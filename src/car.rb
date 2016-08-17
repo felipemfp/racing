@@ -1,5 +1,5 @@
 class Car
-  attr_reader :x, :y, :song, :speed, :angle
+  attr_reader :x, :y, :song, :speed, :angle, :stop_x
   attr_accessor :sample
 
   def initialize(animation_file, song_file, player_speed, pos, angle, move)
