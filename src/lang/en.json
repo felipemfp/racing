@@ -55,5 +55,8 @@
   "pause_options": [
     "Continue",
     "Restart",
-    "Exit"]
+    "Exit"],
+  "countdown": [
+    "3", "2", "1", "GO!"
+  ]
 }

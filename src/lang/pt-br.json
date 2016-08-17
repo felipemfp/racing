@@ -55,5 +55,8 @@
   "pause_options": [
     "Continuar",
     "Reiniciar",
-    "Sair"]
+    "Sair"],
+  "countdown": [
+    "3", "2", "1", "VAI!"
+  ]
 }
