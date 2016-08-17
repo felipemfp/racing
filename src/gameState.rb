@@ -20,6 +20,7 @@ class GameState < State
 
     @initial_millis = Gosu.milliseconds
     @last_millis = millis
+    @last_acceleration = millis
 
     @alive = true
     @paused = false
@@ -128,13 +129,19 @@ class GameState < State
           end
 
           if Gosu.button_down?(Gosu::KbUp) || Gosu.button_down?(Gosu::GpButton2)
-            @player.accelerate
-            @cars.each(&:accelerate)
-            @road.accelerate
+            if millis - @last_acceleration > 100
+              @player.accelerate
+              @cars.each(&:accelerate)
+              @road.accelerate
+              @last_acceleration = millis
+            end
           elsif Gosu.button_down?(Gosu::KbDown) || Gosu.button_down?(Gosu::GpButton3)
-            @player.brake
-            @cars.each(&:brake)
-            @road.brake
+            if millis - @last_acceleration > 25
+              @player.brake
+              @cars.each(&:brake)
+              @road.brake
+              @last_acceleration = millis
+            end
           end
 
           @road.move
