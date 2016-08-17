@@ -61,5 +61,8 @@
   "easy": "Fácil",
   "normal": "Normal",
   "hard": "Difícil",
-  "very_hard": "Muito difícil"
+  "very_hard": "Muito difícil",
+  "countdown": [
+    "3", "2", "1", "VAI!"
+  ]
 }

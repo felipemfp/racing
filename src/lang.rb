@@ -79,4 +79,8 @@ class Lang
     return @data['pause_options']
   end
 
+  def countdown
+    return @data['countdown']
+  end
+
 end
