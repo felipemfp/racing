@@ -8,6 +8,9 @@ class GameState < State
       @main.lang.data['game_over'].sample, 45, font: 'src/media/fonts/NeedforFont.ttf'
     )
     @gameover_image = Gosu::Image.new('src/media/images/gameover.png', tileable: true)
+    @newscore = Gosu::Image.from_text(
+      @main.lang.data['new_score'], 45, font: 'src/media/fonts/NeedforFont.ttf'
+    )
 
     @pause_font = Gosu::Font.new(25, name: 'src/media/fonts/Play-Regular.ttf')
     @pause_image = Gosu::Image.new('src/media/images/shade.png', tileable: true)
@@ -154,13 +157,16 @@ class GameState < State
     @road.draw
     @cars.each(&:draw)
     @score_font.draw("#{@score_label}: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_f5f5f5)
-    @gameover.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0) unless @alive
+    if @main.data['high_scores'].index(@player.score) == 0 && !@alive
+      @newscore.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0)
+    elsif !@alive
+      @gameover.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0)
+    end
     @gameover_image.draw(0, 0, ZOrder::Cover) unless @alive
     @speedometer.draw_rot(WIDTH - 80 , HEIGHT - 80, ZOrder::Element, 0.0)
     @speedometer_pointer.draw_rot(WIDTH - 80, HEIGHT - 80, ZOrder::Element, speedometer_angle)
     if @paused
       @pause_image.draw(0, 0, ZOrder::Cover)
-
       @pause_options.each_with_index do |option, i|
         caption = option
         caption = '  ' + caption if i == @current_option
