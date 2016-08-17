@@ -87,6 +87,9 @@ class GameState < State
           if @current_wave < @options[:cars_wave]
             next_car = get_next_car
             if @cars.size == 0 || (next_car.x != @cars[-1].x && next_car.stop_x != @cars[-1].x && next_car.x != @cars[-1].stop_x)
+              if @cars.size > 0 && next_car.stop_x == @cars[-1].stop_x
+                next_car.stop_x = next_car.x
+              end
               if next_car.song
                 next_car.sample = @main.play_sound(next_car.song, true, 0.3)
               end
@@ -129,7 +132,7 @@ class GameState < State
         @road.move
         @cars.each(&:move)
 
-        @score += ((millis / 226 * @player.speed) / 1000)
+        @score += ((millis / @options[:score_factor] * @player.speed) / 1000)
         @score = @score.to_f.round(2)
         @player.set_score(@score.to_i)
 

@@ -5,6 +5,7 @@ class OptionsState < State
     @option_font = Gosu::Font.new(20, name: 'src/media/fonts/Play-Regular.ttf')
     load_options
     @languages = @main.lang.get_all
+    @difficulties = @main.data['config']['difficulty'].keys
     @current_language = @languages.find { |l| l[1] == @main.data['config']['language'] }
     @margins = [30, 30, HEIGHT - 45, 200]
     @current_option = 0
@@ -32,6 +33,7 @@ class OptionsState < State
     end
     @option_font.draw(@current_language[0], @margins[3], @margins[0], ZOrder::UI)
     @option_font.draw(@options_sound, @margins[3], @margins[0] * 2, ZOrder::UI)
+    @option_font.draw(@options_difficulty, @margins[3], @margins[0] * 3, ZOrder::UI)
   end
 
   def button_down(id)
@@ -44,6 +46,11 @@ class OptionsState < State
         load_options
       when 1
         @main.toggle_music(@song, true)
+        load_options
+      when 2
+        next_difficulty = @difficulties.index(@main.data['config']['current_difficulty']) + 1
+        next_difficulty = 0 if next_difficulty == @difficulties.size
+        @main.data['config']['current_difficulty'] = @difficulties[next_difficulty]
         load_options
       end
     elsif id == Gosu::KbDown || id == Gosu::GpDown
@@ -63,5 +70,6 @@ class OptionsState < State
     @options = @main.lang.options
     @options.push(@main.lang.back) if @options[@options.size - 1] != @main.lang.back
     @options_sound = @main.get_sound_label
+    @options_difficulty = @main.lang.data[@main.data['config']['current_difficulty']]
   end
 end

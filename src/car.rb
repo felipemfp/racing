@@ -1,6 +1,6 @@
 class Car
-  attr_reader :x, :y, :song, :speed, :angle, :stop_x
-  attr_accessor :sample
+  attr_reader :x, :y, :song, :speed, :angle
+  attr_accessor :sample, :stop_x
 
   def initialize(animation_file, song_file, player_speed, pos, angle, move)
     @animation = Gosu::Image.load_tiles(animation_file, 140, 140)

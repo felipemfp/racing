@@ -1,12 +1,15 @@
 class TwoWayGameState < GameState
+  MODE_INDEX = 1
+
   def initialize(options = {})
     super({
       player_margin_left: 135.0,
       player_margin_right: 385.0,
       cars_angle: [180.0, 0.0],
       cars_pos: [140.0, 215.0, 300.0, 375.0],
-      cars_wave: 2,
-      cars_move: true
+      cars_wave: options[:main].current_difficulty[:cars_wave][MODE_INDEX],
+      cars_move: options[:main].current_difficulty[:cars_move],
+      score_factor: options[:main].current_difficulty[:score_factor]
     }.merge(options))
 
     @cars_interval = 7500

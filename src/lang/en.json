@@ -46,7 +46,8 @@
   ],
   "options": [
     "Language",
-    "Sound"
+    "Sound",
+    "Difficulty"
   ],
   "options_sound": [
     "On",
@@ -55,5 +56,10 @@
   "pause_options": [
     "Continue",
     "Restart",
-    "Exit"]
+    "Exit"
+  ],
+  "easy": "Easy",
+  "normal": "Normal",
+  "hard": "Hard",
+  "very_hard": "Very hard"
 }
