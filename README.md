@@ -29,6 +29,7 @@ ruby run.rb
 * [options-bg.jpg](src/media/images/options-bg.jpg) by [New Evolution Designs](https://newevolutiondesigns.com/20-hd-car-wallpapers)
 * [gameover.png](src/media/images/gameover.png) by [Spyder Wallpapers](http://www.spyderonlines.com/wallpapers/broken-glass-wallpaper.html)
 * [ambulance.png](src/media/images/ambulance.png), [audi.png](src/media/audi.png), [black_viper.png](src/media/images/black_viper.png), [car.png](src/media/images/car.png), [mini_truck.png](src/media/images/mini_truck.png), [mini_van.png](src/media/images/mini_van.png), [police.png](src/media/images/police.png) and [taxi.png](src/media/images/taxi.png) by [Unlucky Studio](http://opengameart.org/content/free-top-down-car-sprites-by-unlucky-studio)
+* [speedometer.png](src/media/images/speedometer.png) and [speedometer-pointer.png](src/media/images/speedometer-pointer.png) by [DSMTuner](http://gtaforums.com/topic/494178-speedometer-textures/)
 * [car-brake.wav](src/media/sounds/car-brake.wav) and [car-speed.wav](src/media/sounds/car-speed.wav) by [FreeSoundEffects.com](http://www.freesoundeffects.com/free-sounds/cars-10069/)
 * [menu.wav](src/media/sounds/menu.wav) by [Azure](http://www.flashkit.com/loops/Pop-Rock/Pop/Whatcha-Azure-10593/index.php)
 * [menu-option.wav](src/media/sounds/menu-option.wav) by [Independent.nu](http://opengameart.org/content/16-button-clicks)
