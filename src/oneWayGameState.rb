@@ -1,6 +1,13 @@
 class OneWayGameState < GameState
   def initialize(options = {})
-    super options
+    super({
+      player_margin_left: 175.0,
+      player_margin_right: 335.0,
+      cars_angle: [0.0],
+      cars_pos: [180.0, 255.0, 330.0],
+      cars_per_time: 1,
+      cars_move: true
+    }.merge(options))
 
     @cars_interval = 7500
 
@@ -16,7 +23,6 @@ class OneWayGameState < GameState
     @interval = 2
     @road = Road.new('src/media/images/background-one.png')
 
-    @cars = []
     @last_car = nil
   end
 

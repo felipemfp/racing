@@ -1,14 +1,7 @@
 class GameState < State
   def initialize(options = {})
     super options
-    @options = {
-      player_margin_left: 175.0,
-      player_margin_right: 335.0,
-      cars_inverted: false,
-      cars_pos: [180.0, 255.0, 330.0],
-      cars_per_time: 1,
-      cars_move: false
-    }.merge(options)
+    @options = options
 
     @score_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
     @gameover = Gosu::Image.from_text(
@@ -75,7 +68,13 @@ class GameState < State
       if !@paused
         if @distance - @distance_per_car > @distance_last_car
           next_car = CARS.sample
-          car = Car.new(next_car[0], next_car[1], @player.speed, @options[:cars_pos], @options[:cars_inverted], @options[:cars_move])
+          if @options[:cars_angle].size == 1
+            car = Car.new(next_car[0], next_car[1], @player.speed, @options[:cars_pos], @options[:cars_angle][0], [false, @options[:cars_move]].sample)
+          else
+            next_angle = rand(@options[:cars_angle].size)
+            next_pos = @options[:cars_pos][next_angle * 2..next_angle * 2 + 1]
+            car = Car.new(next_car[0], next_car[1], @player.speed, next_pos, @options[:cars_angle][next_angle], [false, @options[:cars_move]].sample)
+          end
           if car.song
             car.sample = @main.play_sound(car.song, true, 0.3)
           end
