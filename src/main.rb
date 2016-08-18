@@ -54,6 +54,7 @@ class MainWindow < Gosu::Window
     @data = JSON.parse(File.read('src/data/data.json'))
     @lang = Lang.new(main: self, lang: @data['config']['language'])
     @is_sound_enable = @data['config']['sound']
+    @is_countdown_enable = @data['config']['countdown']
 
     @current_state = @states[@state].new(main: self)
   end
@@ -93,11 +94,24 @@ class MainWindow < Gosu::Window
     end
   end
 
+  def toggle_countdown
+    @is_countdown_enable = !@is_countdown_enable
+    @data['config']['countdown'] = @is_countdown_enable
+  end
+
   def get_sound_label
     if @is_sound_enable
       return @lang.options_sound[0]
     else
       return @lang.options_sound[1]
+    end
+  end
+
+  def get_countdown_label
+    if @is_countdown_enable
+      return @lang.options_countdown[0]
+    else
+      return @lang.options_countdown[1]
     end
   end
 
@@ -116,6 +130,8 @@ class MainWindow < Gosu::Window
 
   def close
     @data['config']['sound'] = @is_sound_enable
+    @data['config']['countdown'] = @is_countdown_enable
+
     File.open('src/data/data.json', 'w') do |f|
       f.write(@data.to_json)
     end

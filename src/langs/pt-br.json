@@ -47,9 +47,14 @@
   "options": [
     "Idioma",
     "Som",
-    "Dificuldade"
+    "Dificuldade",
+    "Contagem Regressiva"
   ],
   "options_sound": [
+    "Ligado",
+    "Desligado"
+  ],
+  "options_countdown": [
     "Ligado",
     "Desligado"
   ],

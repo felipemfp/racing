@@ -75,6 +75,10 @@ class Lang
     return @data['options_sound']
   end
 
+  def options_countdown
+    return @data['options_countdown']
+  end
+
   def pause_options
     return @data['pause_options']
   end
