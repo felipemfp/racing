@@ -18,7 +18,7 @@ class GarageState < State
   end
 
   def draw
-    @background.draw(0, 0, ZOrder::Background)
+    @background.draw(0, 0, ZOrder::BACKGROUND)
     @options.each_with_index do |option, i|
       caption = option
       caption = '  ' + caption if i == @current_option
@@ -31,7 +31,7 @@ class GarageState < State
       end
     end
     image = @car[Gosu.milliseconds / 100 % @car.size]
-    image.draw_rot(355, 155, ZOrder::Cars, 0.0)
+    image.draw_rot(355, 155, ZOrder::CARS, 0.0)
   end
 
   def button_down(id)

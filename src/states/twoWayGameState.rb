@@ -54,9 +54,9 @@ class TwoWayGameState < GameState
         if @cars.size > 1 && (@last_going_car != nil || @last_coming_car)
           @cars.each_with_index do |car, i|
             if car.angle == 180
-              @cars[i].set_speed(@last_coming_car.speed) if @last_coming_car.x == car.x && @last_coming_car.y < car.y + @car_hit_distance
+              @cars[i].speed = @last_coming_car.speed if @last_coming_car.x == car.x && @last_coming_car.y < car.y + @car_hit_distance
             else
-              @cars[i].set_speed(@last_going_car.speed) if @last_going_car.x == car.x && @last_going_car.y < car.y + @car_hit_distance
+              @cars[i].speed = @last_going_car.speed if @last_going_car.x == car.x && @last_going_car.y < car.y + @car_hit_distance
             end
           end
           @last_going_car = nil

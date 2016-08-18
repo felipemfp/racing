@@ -28,10 +28,12 @@ CARS = [
   ['src/media/images/taxi.png', nil]
 ].freeze
 
+# This module holds the Z orders constants.
 module ZOrder
-  Background, Cars, Player, Element, Cover, UI = *0..5
+  BACKGROUND, CARS, PLAYER, ELEMENT, COVER, UI = *0..5
 end
 
+# This class is responsible to handle the game.
 class MainWindow < Gosu::Window
   attr_accessor :state
   attr_reader :data, :lang
@@ -39,24 +41,22 @@ class MainWindow < Gosu::Window
   def initialize
     super WIDTH, HEIGHT
     self.caption = 'Racing'
-
     @states = [
-      MenuState,
-      ScenarioState,
-      HighScoresState,
-      GarageState,
-      OptionsState,
-      OneWayGameState,
-      TwoWayGameState
+      MenuState, ScenarioState, HighScoresState, GarageState,
+      OptionsState, OneWayGameState, TwoWayGameState
     ]
     @state = 0
     @last_state = @state
+    load_metadata
+
+    @current_state = @states[@state].new(main: self)
+  end
+
+  def load_metadata
     @data = JSON.parse(File.read('src/data/data.json'))
     @lang = Lang.new(main: self, lang: @data['config']['language'])
     @is_sound_enable = @data['config']['sound']
     @is_countdown_enable = @data['config']['countdown']
-
-    @current_state = @states[@state].new(main: self)
   end
 
   def update
@@ -75,21 +75,21 @@ class MainWindow < Gosu::Window
     @current_state.button_down(id)
   end
 
-  def play_sound(_song, _loop = false, _volume = 1.0, _speed = 1.0)
-    if _song.is_a? Gosu::Song
-      _song.play(_loop) if @is_sound_enable
-    else
-      _song.play(_volume, _speed, _loop) if @is_sound_enable
+  def play_sound(song, looping = false, volume = 1.0, speed = 1.0)
+    if song.is_a? Gosu::Song
+      song.play(looping) if @is_sound_enable
+    elsif @is_sound_enable
+      song.play(volume, speed, looping)
     end
   end
 
-  def toggle_music(_song = Nil, _loop = false)
+  def toggle_music(song = Nil, looping = false)
     @is_sound_enable = !@is_sound_enable
-    if _song
+    if song
       if @is_sound_enable
-        play_sound(_song, _loop)
+        play_sound(song, looping)
       else
-        _song.stop
+        song.stop
       end
     end
   end
@@ -99,25 +99,18 @@ class MainWindow < Gosu::Window
     @data['config']['countdown'] = @is_countdown_enable
   end
 
-  def get_sound_label
-    if @is_sound_enable
-      return @lang.options_sound[0]
-    else
-      return @lang.options_sound[1]
-    end
+  def sound_label
+    @lang.options_sound[@is_sound_enable ? 0 : 1]
   end
 
-  def get_countdown_label
-    if @is_countdown_enable
-      return @lang.options_countdown[0]
-    else
-      return @lang.options_countdown[1]
-    end
+  def countdown_label
+    @lang.options_countdown[@is_countdown_enable ? 0 : 1]
   end
 
   def current_difficulty
-    difficulty = @data['config']['difficulty'][@data['config']['current_difficulty']]
-    return {
+    difficulty =
+      @data['config']['difficulty'][@data['config']['current_difficulty']]
+    {
       cars_wave: difficulty['cars_wave'],
       cars_move: difficulty['cars_move'],
       score_factor: difficulty['score_factor']

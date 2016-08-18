@@ -4,7 +4,7 @@ class OptionsState < State
     @back_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
     @option_font = Gosu::Font.new(20, name: 'src/media/fonts/Play-Regular.ttf')
     load_options
-    @languages = @main.lang.get_all
+    @languages = @main.lang.all_languages
     @difficulties = @main.data['config']['difficulty'].keys
     @current_language = @languages.find { |l| l[1] == @main.data['config']['language'] }
     @margins = [30, 30, HEIGHT - 45, 250]
@@ -19,7 +19,7 @@ class OptionsState < State
   end
 
   def draw
-    @background.draw(0, 0, ZOrder::Background)
+    @background.draw(0, 0, ZOrder::BACKGROUND)
     @options.each_with_index do |option, i|
       caption = option
       caption = '  ' + caption if i == @current_option
@@ -70,8 +70,8 @@ class OptionsState < State
   def load_options
     @options = @main.lang.options
     @options.push(@main.lang.back) if @options[@options.size - 1] != @main.lang.back
-    @options_sound = @main.get_sound_label
-    @options_countdown = @main.get_countdown_label
+    @options_sound = @main.sound_label
+    @options_countdown = @main.countdown_label
     @options_difficulty = @main.lang.data[@main.data['config']['current_difficulty']]
   end
 end

@@ -13,11 +13,11 @@ class ScenarioState < State
   end
 
   def draw
-    @background.draw(0, 0, ZOrder::Background)
+    @background.draw(0, 0, ZOrder::BACKGROUND)
     if @current_option == 1
-      @select.draw(0, 0, ZOrder::Cover)
+      @select.draw(0, 0, ZOrder::COVER)
     else
-      @select.draw(WIDTH / 2, 0, ZOrder::Cover)
+      @select.draw(WIDTH / 2, 0, ZOrder::COVER)
     end
   end
 

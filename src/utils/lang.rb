@@ -1,90 +1,87 @@
+# This class is responsible to handle the i18n support.
 class Lang
   attr_reader :data, :languages
 
   def initialize(options = {})
     @lang = options[:lang]
     @main = options[:main]
-
-    @data = get_lang(@lang)
-    @languages = get_all
+    @data = open_language(@lang)
+    @languages = all_languages
   end
 
-  def get_lang(lang)
-    @path = 'src/langs/'+lang+'.json'
-    if !File.file?(@path)
-      @path = 'src/langs/en.json'
-    end
-    return JSON.parse(File.read(@path))
+  def open_language(lang)
+    @path = 'src/langs/' + lang + '.json'
+    @path = 'src/langs/en.json' unless File.file?(@path)
+    JSON.parse(File.read(@path))
   end
 
-  def get_all
+  def all_languages
     path = 'src/langs/'
-    lang_files = Dir.entries(path).select {|f| !File.directory? f}
+    lang_files = Dir.entries(path).select { |f| !File.directory? f }
     languages = []
     lang_files.each do |language|
       name = JSON.parse(File.read(path + language))['language']
       value = language.split('.')[0]
       languages.push([name, value])
     end
-    return languages
+    languages
   end
 
   def switch
-    current = @languages.find { |l| l[1] == @main.data['config']['language'] }
+    current = current_language
     index = @languages.index(current)
-    if index == @languages.size - 1
-      index = 0
-    else
-      index += 1
-    end
+    index = index == @languages.size - 1 ? 0 : index + 1
     current = @languages[index]
-    @data = get_lang(current[1])
+    @data = open_language(current[1])
     @main.data['config']['language'] = current[1]
-    return current
+    current
+  end
+
+  def current_language
+    @languages.find { |l| l[1] == @main.data['config']['language'] }
   end
 
   def menu
-    return @data['menu']
+    @data['menu']
   end
 
   def high_scores_label
-    return @data['high_scores']
+    @data['high_scores']
   end
 
   def back
-    return @data['option_back']
+    @data['option_back']
   end
 
   def clear
-    return @data['option_clear']
+    @data['option_clear']
   end
 
   def score_label
-    return @data['score_label']
+    @data['score_label']
   end
 
   def cars_option
-    return @data['cars_option']
+    @data['cars_option']
   end
 
   def options
-    return @data['options']
+    @data['options']
   end
 
   def options_sound
-    return @data['options_sound']
+    @data['options_sound']
   end
 
   def options_countdown
-    return @data['options_countdown']
+    @data['options_countdown']
   end
 
   def pause_options
-    return @data['pause_options']
+    @data['pause_options']
   end
 
   def countdown
-    return @data['countdown']
+    @data['countdown']
   end
-
 end

@@ -49,9 +49,7 @@ class GameState < State
       @options[:player_margin_left],
       @options[:player_margin_right]
     )
-    if @player.song
-      @player.sample = @main.play_sound(@player.song, true, 0.5)
-    end
+    @player.sample = @main.play_sound(@player.song, true, 0.5) if @player.song
 
     @player.warp(WIDTH / 2, HEIGHT - 90)
 
@@ -79,24 +77,38 @@ class GameState < State
   def get_next_car
     next_car = CARS.sample
     if @options[:cars_angle].size == 1
-      car = Car.new(next_car[0], next_car[1], @player.speed, @options[:cars_pos], @options[:cars_angle][0], [false, @options[:cars_move]].sample)
+      car = Car.new(
+        next_car[0],
+        next_car[1],
+        @options[:cars_angle][0],
+        player_speed: @player.speed,
+        pos: @options[:cars_pos],
+        move: [false, @options[:cars_move]].sample
+      )
     else
       next_angle = rand(@options[:cars_angle].size)
       next_pos = @options[:cars_pos][next_angle * 2..next_angle * 2 + 1]
-      car = Car.new(next_car[0], next_car[1], @player.speed, next_pos, @options[:cars_angle][next_angle], [false, @options[:cars_move]].sample)
+      car = Car.new(
+        next_car[0],
+        next_car[1],
+        @options[:cars_angle][next_angle],
+        player_speed: @player.speed,
+        pos: next_pos,
+        move: [false, @options[:cars_move]].sample
+      )
     end
     car
   end
 
   def update
     if @alive
-      if !@paused
+      unless @paused
         if !@loading
           if @distance - @distance_per_car > @distance_last_car || @current_wave < @options[:cars_wave]
             if @current_wave < @options[:cars_wave]
               next_car = get_next_car
-              if @cars.size == 0 || (next_car.x != @cars[-1].x && next_car.stop_x != @cars[-1].x && next_car.x != @cars[-1].stop_x)
-                if @cars.size > 0 && next_car.stop_x == @cars[-1].stop_x
+              if @cars.size.zero? || (next_car.x != @cars[-1].x && next_car.stop_x != @cars[-1].x && next_car.x != @cars[-1].stop_x)
+                if !@cars.empty? && next_car.stop_x == @cars[-1].stop_x
                   next_car.stop_x = next_car.x
                 end
                 if next_car.song
@@ -183,11 +195,11 @@ class GameState < State
     elsif !@alive
       @gameover.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, -7.0)
     end
-    @gameover_image.draw(0, 0, ZOrder::Cover) unless @alive
-    @speedometer.draw_rot(WIDTH - 80 , HEIGHT - 80, ZOrder::Element, 0.0)
-    @speedometer_pointer.draw_rot(WIDTH - 80, HEIGHT - 80, ZOrder::Element, speedometer_angle)
+    @gameover_image.draw(0, 0, ZOrder::COVER) unless @alive
+    @speedometer.draw_rot(WIDTH - 80, HEIGHT - 80, ZOrder::ELEMENT, 0.0)
+    @speedometer_pointer.draw_rot(WIDTH - 80, HEIGHT - 80, ZOrder::ELEMENT, speedometer_angle)
     if @paused
-      @shade_image.draw(0, 0, ZOrder::Cover)
+      @shade_image.draw(0, 0, ZOrder::COVER)
       @pause_options.each_with_index do |option, i|
         caption = option
         caption = '  ' + caption if i == @current_option
@@ -195,7 +207,7 @@ class GameState < State
         @pause_font.draw(caption, @margins[0], top_margin, ZOrder::UI)
       end
     elsif @loading
-      @shade_image.draw(0, 0, ZOrder::Cover)
+      @shade_image.draw(0, 0, ZOrder::COVER)
       @loading_font.draw_rot(WIDTH / 2, HEIGHT / 2, ZOrder::UI, 0.0)
       if millis / 1000 > 0
         @loading_index += 1
@@ -213,9 +225,7 @@ class GameState < State
     if !@alive
       leave_game
     else
-      if id == Gosu::KbEscape || id == Gosu::GpButton1
-        @paused = !@paused
-      end
+      @paused = !@paused if id == Gosu::KbEscape || id == Gosu::GpButton1
       if @paused
         if id == Gosu::KbDown || id == Gosu::GpDown
           @current_option += 1
@@ -240,7 +250,7 @@ class GameState < State
 
   def speedometer_angle
     oldrange = 3.5 - 1.0
-    newrange = 75 - (-90)
-    ((@player.speed - 1.0) * newrange) / oldrange + (-90)
+    newrange = 75 - -90
+    ((@player.speed - 1.0) * newrange) / oldrange + -90
   end
 end

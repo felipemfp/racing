@@ -22,7 +22,7 @@ class HighScoresState < State
   end
 
   def draw
-    @background.draw(0, 0, ZOrder::Background)
+    @background.draw(0, 0, ZOrder::BACKGROUND)
     @options.each_with_index do |option, i|
       caption = option
       caption = '  ' + caption if i == @current_option

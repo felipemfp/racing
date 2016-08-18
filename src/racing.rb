@@ -1,7 +1,10 @@
 require_relative 'main'
 
+# This module is responsible to open the game.
 module Racing
-  def self.open
+  module_function
+
+  def open
     window = MainWindow.new
     window.show
   end

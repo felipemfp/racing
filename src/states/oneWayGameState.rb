@@ -47,7 +47,7 @@ class OneWayGameState < GameState
 
         if @cars.size > 1 && @last_car != nil
           @cars.each_with_index do |car, i|
-            @cars[i].set_speed(@last_car.speed) if @last_car.x == car.x && @last_car.y < car.y + @car_hit_distance
+            @cars[i].speed = @last_car.speed if @last_car.x == car.x && @last_car.y < car.y + @car_hit_distance
           end
           @last_car = nil
         end

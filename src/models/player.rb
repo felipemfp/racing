@@ -77,6 +77,6 @@ class Player
 
   def draw
     image = @animation[Gosu.milliseconds / 100 % @animation.size]
-    image.draw_rot(@x, @y, ZOrder::Player, @angle)
+    image.draw_rot(@x, @y, ZOrder::PLAYER, @angle)
   end
 end
