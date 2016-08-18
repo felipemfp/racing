@@ -47,9 +47,14 @@
   "options": [
     "Language",
     "Sound",
-    "Difficulty"
+    "Difficulty",
+    "Countdown"
   ],
   "options_sound": [
+    "On",
+    "Off"
+  ],
+  "options_countdown": [
     "On",
     "Off"
   ],
