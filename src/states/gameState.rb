@@ -25,7 +25,7 @@ class GameState < State
     @alive = true
     @paused = false
 
-    @loading = true
+    @loading = @main.data['config']['countdown']
     @loading_index = 0
     @loading_texts = @main.lang.countdown
     @loading_font = Gosu::Image.from_text(

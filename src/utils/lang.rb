@@ -10,15 +10,15 @@ class Lang
   end
 
   def get_lang(lang)
-    @path = 'src/lang/'+lang+'.json'
+    @path = 'src/langs/'+lang+'.json'
     if !File.file?(@path)
-      @path = 'src/lang/en-us.json'
+      @path = 'src/langs/en.json'
     end
     return JSON.parse(File.read(@path))
   end
 
   def get_all
-    path = 'src/lang/'
+    path = 'src/langs/'
     lang_files = Dir.entries(path).select {|f| !File.directory? f}
     languages = []
     lang_files.each do |language|
@@ -73,6 +73,10 @@ class Lang
 
   def options_sound
     return @data['options_sound']
+  end
+
+  def options_countdown
+    return @data['options_countdown']
   end
 
   def pause_options

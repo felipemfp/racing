@@ -1,19 +1,19 @@
 require 'rubygems'
 require 'gosu'
 require 'json'
-require_relative 'state'
-require_relative 'player'
-require_relative 'car'
-require_relative 'road'
-require_relative 'lang'
-require_relative 'menuState'
-require_relative 'gameState'
-require_relative 'scenarioState'
-require_relative 'oneWayGameState'
-require_relative 'twoWayGameState'
-require_relative 'highScoresState'
-require_relative 'garageState'
-require_relative 'optionsState'
+require_relative 'models/state'
+require_relative 'models/player'
+require_relative 'models/car'
+require_relative 'models/road'
+require_relative 'utils/lang'
+require_relative 'states/menuState'
+require_relative 'states/gameState'
+require_relative 'states/scenarioState'
+require_relative 'states/oneWayGameState'
+require_relative 'states/twoWayGameState'
+require_relative 'states/highScoresState'
+require_relative 'states/garageState'
+require_relative 'states/optionsState'
 
 WIDTH = 512
 HEIGHT = 512
@@ -54,6 +54,7 @@ class MainWindow < Gosu::Window
     @data = JSON.parse(File.read('src/data/data.json'))
     @lang = Lang.new(main: self, lang: @data['config']['language'])
     @is_sound_enable = @data['config']['sound']
+    @is_countdown_enable = @data['config']['countdown']
 
     @current_state = @states[@state].new(main: self)
   end
@@ -93,11 +94,24 @@ class MainWindow < Gosu::Window
     end
   end
 
+  def toggle_countdown
+    @is_countdown_enable = !@is_countdown_enable
+    @data['config']['countdown'] = @is_countdown_enable
+  end
+
   def get_sound_label
     if @is_sound_enable
       return @lang.options_sound[0]
     else
       return @lang.options_sound[1]
+    end
+  end
+
+  def get_countdown_label
+    if @is_countdown_enable
+      return @lang.options_countdown[0]
+    else
+      return @lang.options_countdown[1]
     end
   end
 
@@ -116,6 +130,8 @@ class MainWindow < Gosu::Window
 
   def close
     @data['config']['sound'] = @is_sound_enable
+    @data['config']['countdown'] = @is_countdown_enable
+
     File.open('src/data/data.json', 'w') do |f|
       f.write(@data.to_json)
     end
