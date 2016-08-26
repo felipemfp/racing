@@ -1,27 +1,30 @@
+# This class contains the Player properties and functionality.
 class Player
-  attr_reader :score, :song, :speed
-  attr_accessor :sample
+  attr_reader :song, :speed
+  attr_accessor :score, :sample
 
   def initialize(animation_file, song_file, margin_left, margin_right)
     @animation = Gosu::Image.load_tiles(animation_file, 140, 140)
     @song = Gosu::Sample.new(song_file) if song_file
-    @x, @y, @angle = 0.0, 0.0, 0.0
+    @margin_left = margin_left
+    @margin_right = margin_right
+    load_properties
+  end
+
+  def load_properties
+    @x = 0.0
+    @y = 0.0
+    @angle = 0.0
     @score = 0
     @speed = 1.0
     @speed_limit = 3.5
     @speed_minimun = 1.0
-    @acceleration = [1.025,0.975]
-    @margin_left = margin_left
-    @margin_right = margin_right
+    @acceleration = [1.025, 0.975]
   end
 
   def warp(x, y)
     @x = x
     @y = y
-  end
-
-  def set_score(s)
-    @score = s
   end
 
   def accelerate
@@ -59,20 +62,22 @@ class Player
   def collision?(cars)
     cars.each do |car|
       if @x > car.x
-        if @y > car.y
-          return true if @x - car.x < 50 && @y - car.y < 110
-        else
-          return true if @x - car.x < 50 && car.y - @y < 110
-        end
-      else
-        if car.y > @y
-          return true if car.x - @x < 50 && car.y - @y < 110
-        else
-          return true if car.x - @x < 50 && @y - car.y < 110
-        end
+        return true if left_collision?(car)
+      elsif right_collision?(car)
+        return true
       end
     end
     false
+  end
+
+  def left_collision?(car)
+    return (@x - car.x < 50 && @y - car.y < 110) if @y > car.y
+    (@x - car.x < 50 && car.y - @y < 110)
+  end
+
+  def right_collision?(car)
+    return (car.x - @x < 50 && car.y - @y < 110) if car.y > @y
+    (car.x - @x < 50 && @y - car.y < 110)
   end
 
   def draw

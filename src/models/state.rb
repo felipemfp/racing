@@ -1,3 +1,4 @@
+# This class contains the functionality that every State must have.
 class State
   def initialize(options = {})
     @main = options[:main]

@@ -161,7 +161,7 @@ class GameState < State
 
           @score += ((millis / @options[:score_factor] * @player.speed) / 1000)
           @score = @score.to_f.round(2)
-          @player.set_score(@score.to_i)
+          @player.score = @score.to_i
 
           if @player.collision?(@cars)
             @main.play_sound(@car_brake)
