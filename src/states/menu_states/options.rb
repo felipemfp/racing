@@ -1,16 +1,13 @@
-# This class handles the Options state behavior.
-class OptionsState < State
+# This class handles the Options menu behavior.
+class OptionsMenuState < MenuState
   def initialize(options = {})
     super options
     load_options
-    load_assets
     load_languages
     load_difficulties
     @margins = [30, 30, HEIGHT - 45, 250]
-    @current_option = 0
     @current_language =
       @languages.find { |l| l[1] == @main.data['config']['language'] }
-    @main.play_sound(@song, true)
   end
 
   def load_assets
@@ -37,11 +34,8 @@ class OptionsState < State
     @difficulties = @main.data['config']['difficulty'].keys
   end
 
-  def update
-  end
-
   def draw
-    @background.draw(0, 0, ZOrder::BACKGROUND)
+    super
     draw_options
     draw_choices
   end
@@ -86,26 +80,8 @@ class OptionsState < State
     end
   end
 
-  def handle_navigation(button_id)
-    @main.play_sound(@option_sample)
-    case button_id
-    when Gosu::KbDown, Gosu::GpDown
-      @current_option += 1
-      @current_option = 0 if @current_option >= @options.size
-    when Gosu::KbUp, Gosu::GpUp
-      @current_option -= 1
-      @current_option = @options.size - 1 if @current_option < 0
-    end
-  end
-
   def button_down(id)
-    case id
-    when Gosu::KbReturn, Gosu::GpButton2
-      handle_choice
-      load_options
-    when Gosu::KbDown, Gosu::GpDown, Gosu::KbUp, Gosu::GpUp
-      handle_navigation(id)
-    when Gosu::KbEscape, Gosu::GpButton1 then @main.state = 0
-    end
+    super id
+    load_options if id == Gosu::KbReturn || id == Gosu::GpButton2
   end
 end
