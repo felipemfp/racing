@@ -2,8 +2,8 @@ class GarageState < State
   def initialize(options = {})
     super options
     @option_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
-    @options = @main.lang.cars_option
-    @options.push(@main.lang.back) if @options[@options.size - 1] != @main.lang.back
+    @options = @main.lang['cars_option']
+    @options.push(@main.lang['option_back']) if @options[@options.size - 1] != @main.lang['option_back']
     @margins = [30, 30, HEIGHT - 45]
     @current_option = @main.data['current_car']
     @background = Gosu::Image.new('src/media/images/garage-bg.jpg', tileable: true)

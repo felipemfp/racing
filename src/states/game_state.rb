@@ -5,16 +5,16 @@ class GameState < State
 
     @score_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
     @gameover = Gosu::Image.from_text(
-      @main.lang.data['game_over'].sample, 45, font: 'src/media/fonts/NeedforFont.ttf'
+      @main.lang['game_over'].sample, 45, font: 'src/media/fonts/NeedforFont.ttf'
     )
     @gameover_image = Gosu::Image.new('src/media/images/gameover.png', tileable: true)
     @newscore = Gosu::Image.from_text(
-      @main.lang.data['new_score'], 45, font: 'src/media/fonts/NeedforFont.ttf'
+      @main.lang['new_score'], 45, font: 'src/media/fonts/NeedforFont.ttf'
     )
 
     @shade_image = Gosu::Image.new('src/media/images/shade.png', tileable: true)
     @pause_font = Gosu::Font.new(25, name: 'src/media/fonts/Play-Regular.ttf')
-    @pause_options = @main.lang.pause_options
+    @pause_options = @main.lang['pause_options']
     @current_option = 0
     @margins = [30, HEIGHT - 100, 30]
 
@@ -27,13 +27,13 @@ class GameState < State
 
     @loading = @main.data['config']['countdown']
     @loading_index = 0
-    @loading_texts = @main.lang.countdown
+    @loading_texts = @main.lang['countdown']
     @loading_font = Gosu::Image.from_text(
       @loading_texts[@loading_index], 90, font: 'src/media/fonts/NeedforFont.ttf'
     )
 
     @score = 0
-    @score_label = @main.lang.score_label
+    @score_label = @main.lang['score_label']
 
     @car_brake = Gosu::Sample.new('src/media/sounds/car-brake.wav')
     @car_speed = Gosu::Song.new('src/media/sounds/car-speed.wav')

@@ -23,15 +23,14 @@ class OptionsState < State
   end
 
   def load_options
-    @options = @main.lang.options.push(@main.lang.back).uniq
+    @options = @main.lang['options'].push(@main.lang['option_back']).uniq
     @options_sound = @main.sound_label
     @options_countdown = @main.countdown_label
-    @options_difficulty =
-      @main.lang.data[@main.current_difficulty[:difficulty]]
+    @options_difficulty = @main.lang[@main.current_difficulty[:difficulty]]
   end
 
   def load_languages
-    @languages = @main.lang.all_languages
+    @languages = @main.lang.languages
   end
 
   def load_difficulties
@@ -62,16 +61,17 @@ class OptionsState < State
 
   def draw_choices
     [
-      @current_language[0], @options_sound,
-      @options_difficulty, @options_countdown
+      @current_language[0],
+      @options_sound,
+      @options_difficulty,
+      @options_countdown
     ].each_with_index do |caption, i|
       @option_font.draw(caption, @margins[3], @margins[0] * (i + 1), ZOrder::UI)
     end
   end
 
   def next_difficulty
-    nxt =
-      @difficulties.index(@main.current_difficulty[:difficulty]) + 1
+    nxt = @difficulties.index(@main.current_difficulty[:difficulty]) + 1
     nxt = 0 if nxt == @difficulties.size
     @main.data['config']['current_difficulty'] = @difficulties[nxt]
   end

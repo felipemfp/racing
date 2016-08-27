@@ -31,13 +31,14 @@ class Car
   def load_movements(pos, move)
     return unless move
     index = pos.index(@x)
-    @stop_x = if index.zero?
-                pos[index + 1]
-              elsif index == pos.size - 1
-                pos[index - 1]
-              else
-                pos[[index - 1, index + 1].sample]
-              end
+    @stop_x =
+      if index.zero?
+        pos[index + 1]
+      elsif index == pos.size - 1
+        pos[index - 1]
+      else
+        pos[[index - 1, index + 1].sample]
+      end
   end
 
   def warp(x, y)

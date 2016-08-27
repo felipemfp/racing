@@ -104,11 +104,11 @@ class MainWindow < Gosu::Window
   end
 
   def sound_label
-    @lang.options_sound[@is_sound_enable ? 0 : 1]
+    @lang['options_sound'][@is_sound_enable ? 0 : 1]
   end
 
   def countdown_label
-    @lang.options_countdown[@is_countdown_enable ? 0 : 1]
+    @lang['options_countdown'][@is_countdown_enable ? 0 : 1]
   end
 
   def current_difficulty

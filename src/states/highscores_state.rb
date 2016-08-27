@@ -3,13 +3,13 @@ class HighScoresState < State
     super options
     @option_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
     @options = [
-      @main.lang.clear,
-      @main.lang.back
+      @main.lang['option_clear'],
+      @main.lang['option_back']
     ]
     @margin_option = [HEIGHT - 65, HEIGHT - 45]
     @margin_score = [30, 150, 25]
     @scores = @main.data['high_scores']
-    @scores_label = @main.lang.high_scores_label
+    @scores_label = @main.lang['high_scores']
     @current_option = 1
     @background = Gosu::Image.new('src/media/images/high-scores-bg.jpg', tileable: true)
     @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')

@@ -1,6 +1,6 @@
 # This class is responsible to handle the i18n support.
 class Lang
-  attr_reader :data, :languages
+  attr_reader :languages
 
   def initialize(options = {})
     @lang = options[:lang]
@@ -10,9 +10,9 @@ class Lang
   end
 
   def open_language(lang)
-    @path = 'src/langs/' + lang + '.json'
-    @path = 'src/langs/en.json' unless File.file?(@path)
-    JSON.parse(File.read(@path))
+    @path_to_file = 'src/langs/' + lang + '.json'
+    @path_to_file = 'src/langs/en.json' unless File.file?(@path_to_file)
+    JSON.parse(File.read(@path_to_file))
   end
 
   def all_languages
@@ -41,47 +41,7 @@ class Lang
     @languages.find { |l| l[1] == @main.data['config']['language'] }
   end
 
-  def menu
-    @data['menu']
-  end
-
-  def high_scores_label
-    @data['high_scores']
-  end
-
-  def back
-    @data['option_back']
-  end
-
-  def clear
-    @data['option_clear']
-  end
-
-  def score_label
-    @data['score_label']
-  end
-
-  def cars_option
-    @data['cars_option']
-  end
-
-  def options
-    @data['options']
-  end
-
-  def options_sound
-    @data['options_sound']
-  end
-
-  def options_countdown
-    @data['options_countdown']
-  end
-
-  def pause_options
-    @data['pause_options']
-  end
-
-  def countdown
-    @data['countdown']
+  def [](label)
+    @data[label]
   end
 end

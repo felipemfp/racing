@@ -2,7 +2,7 @@ class MenuState < State
   def initialize(options = {})
     super options
     @font = Gosu::Font.new(25, name: 'src/media/fonts/Play-Regular.ttf')
-    @options = @main.lang.menu
+    @options = @main.lang['menu']
     @margins = [30, 40]
     @current_option = 0
     @background = Gosu::Image.new('src/media/images/menu-bg.jpg', tileable: true)
