@@ -1,8 +1,8 @@
-# racing
+# Racing
 
 A simple game built with Ruby and Gosu.
 
-![Preview](https://66.media.tumblr.com/7a8665105694e3a0e9dde6f9ba6cc1d1/tumblr_o9pwcskjLN1vnlnoto1_1280.png)
+![Racing](http://i.imgur.com/AxOvTPJ.png)
 
 ## Getting Started
 
