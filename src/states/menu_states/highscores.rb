@@ -14,12 +14,12 @@ class HighScoresMenuState < MenuState
   end
 
   def load_assets
-    @option_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
-    @background = Gosu::Image.new('src/media/images/high-scores-bg.jpg',
+    @option_font = Gosu::Font.new(15, name: Path::FONTS + 'Play-Regular.ttf')
+    @background = Gosu::Image.new(Path::IMAGES + 'high-scores-bg.jpg',
                                   tileable: true)
-    @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
-    @score_font = Gosu::Font.new(25, name: 'src/media/fonts/Play-Regular.ttf')
-    @song = Gosu::Song.new('src/media/sounds/menu.wav')
+    @option_sample = Gosu::Sample.new(Path::SOUNDS + 'menu-option.wav')
+    @score_font = Gosu::Font.new(25, name: Path::FONTS + 'Play-Regular.ttf')
+    @song = Gosu::Song.new(Path::SOUNDS + 'menu.wav')
   end
 
   def draw

@@ -7,11 +7,11 @@ class MainMenuState < MenuState
   end
 
   def load_assets
-    @font = Gosu::Font.new(25, name: 'src/media/fonts/Play-Regular.ttf')
-    @background = Gosu::Image.new('src/media/images/menu-bg.jpg',
+    @font = Gosu::Font.new(25, name: Path::FONTS + 'Play-Regular.ttf')
+    @background = Gosu::Image.new(Path::IMAGES + 'menu-bg.jpg',
                                   tileable: true)
-    @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
-    @song = Gosu::Song.new('src/media/sounds/menu.wav')
+    @option_sample = Gosu::Sample.new(Path::SOUNDS + 'menu-option.wav')
+    @song = Gosu::Song.new(Path::SOUNDS + 'menu.wav')
   end
 
   def draw

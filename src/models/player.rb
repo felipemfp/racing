@@ -1,6 +1,6 @@
 # This class contains the Player properties and functionality.
 class Player
-  attr_reader :song, :speed
+  attr_reader :song, :speed, :speed_limit, :speed_minimun
   attr_accessor :score, :sample
 
   def initialize(animation_file, song_file, margin_left, margin_right)

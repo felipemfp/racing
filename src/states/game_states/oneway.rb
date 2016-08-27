@@ -24,7 +24,7 @@ class OneWayGameState < GameState
     @car_hit_distance = 145
 
     @interval = 2
-    @road = Road.new('src/media/images/background-one.png')
+    @road = Road.new(Path::IMAGES + 'background-one.png')
 
     @last_car = nil
   end

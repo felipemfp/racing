@@ -13,12 +13,12 @@ class GarageMenuState < MenuState
   end
 
   def load_assets
-    @option_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
-    @background = Gosu::Image.new('src/media/images/garage-bg.jpg',
+    @option_font = Gosu::Font.new(15, name: Path::FONTS + 'Play-Regular.ttf')
+    @background = Gosu::Image.new(Path::IMAGES + 'garage-bg.jpg',
                                   tileable: true)
-    @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
-    @song = Gosu::Song.new('src/media/sounds/menu.wav')
-    @car_font = Gosu::Font.new(20, name: 'src/media/fonts/Play-Regular.ttf')
+    @option_sample = Gosu::Sample.new(Path::SOUNDS + 'menu-option.wav')
+    @song = Gosu::Song.new(Path::SOUNDS + 'menu.wav')
+    @car_font = Gosu::Font.new(20, name: Path::FONTS + 'Play-Regular.ttf')
   end
 
   def draw

@@ -8,6 +8,7 @@ require_relative 'models/state'
 require_relative 'models/player'
 require_relative 'models/car'
 require_relative 'models/road'
+require_relative 'models/speedometer'
 
 require_relative 'states/menu_state'
 require_relative 'states/game_state'
@@ -21,23 +22,33 @@ require_relative 'states/menu_states/options'
 require_relative 'states/game_states/oneway'
 require_relative 'states/game_states/twoway'
 
-WIDTH = 512
-HEIGHT = 512
-CARS = [
-  ['src/media/images/car.png', nil],
-  ['src/media/images/ambulance.png', 'src/media/sounds/ambulance.wav'],
-  ['src/media/images/audi.png', nil],
-  ['src/media/images/black_viper.png', nil],
-  ['src/media/images/mini_truck.png', nil],
-  ['src/media/images/mini_van.png', nil],
-  ['src/media/images/police.png', 'src/media/sounds/police.wav'],
-  ['src/media/images/taxi.png', nil]
-].freeze
-
 # This module holds the Z orders constants.
 module ZOrder
   BACKGROUND, CARS, PLAYER, ELEMENT, COVER, UI = *0..5
 end
+
+# This module holds the paths constants.
+module Path
+  SOURCE = File.dirname(__FILE__).freeze
+  FONTS =  File.join(SOURCE, 'media/fonts/').freeze
+  IMAGES = File.join(SOURCE, 'media/images/').freeze
+  SOUNDS = File.join(SOURCE, 'media/sounds/').freeze
+  DATA = File.join(SOURCE, 'data/').freeze
+  LANGS = File.join(SOURCE, 'langs/').freeze
+end
+
+WIDTH = 512
+HEIGHT = 512
+CARS = [
+  [Path::IMAGES + 'car.png', nil],
+  [Path::IMAGES + 'ambulance.png', Path::SOUNDS + 'ambulance.wav'],
+  [Path::IMAGES + 'audi.png', nil],
+  [Path::IMAGES + 'black_viper.png', nil],
+  [Path::IMAGES + 'mini_truck.png', nil],
+  [Path::IMAGES + 'mini_van.png', nil],
+  [Path::IMAGES + 'police.png', Path::SOUNDS + 'police.wav'],
+  [Path::IMAGES + 'taxi.png', nil]
+].freeze
 
 # This class is responsible to handle the game.
 class GameWindow < Gosu::Window
@@ -54,12 +65,11 @@ class GameWindow < Gosu::Window
     @state = 0
     @last_state = @state
     load_metadata
-
     @current_state = @states[@state].new(main: self)
   end
 
   def load_metadata
-    @data = JSON.parse(File.read('src/data/data.json'))
+    @data = JSON.parse(File.read(Path::DATA + 'data.json'))
     @lang = Lang.new(main: self, lang: @data['config']['language'])
     @is_sound_enable = @data['config']['sound']
     @is_countdown_enable = @data['config']['countdown']
@@ -131,8 +141,7 @@ class GameWindow < Gosu::Window
   def close
     @data['config']['sound'] = @is_sound_enable
     @data['config']['countdown'] = @is_countdown_enable
-
-    File.open('src/data/data.json', 'w') do |f|
+    File.open(Path::DATA + 'data.json', 'w') do |f|
       f.write(@data.to_json)
     end
     super

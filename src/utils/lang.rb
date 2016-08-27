@@ -10,13 +10,13 @@ class Lang
   end
 
   def open_language(lang)
-    @path_to_file = 'src/langs/' + lang + '.json'
-    @path_to_file = 'src/langs/en.json' unless File.file?(@path_to_file)
+    @path_to_file = Path::LANGS + lang + '.json'
+    @path_to_file = Path::LANGS + 'en.json' unless File.file?(@path_to_file)
     JSON.parse(File.read(@path_to_file))
   end
 
   def all_languages
-    path = 'src/langs/'
+    path = Path::LANGS
     lang_files = Dir.entries(path).select { |f| !File.directory? f }
     languages = []
     lang_files.each do |language|

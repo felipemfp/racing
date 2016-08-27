@@ -11,12 +11,12 @@ class OptionsMenuState < MenuState
   end
 
   def load_assets
-    @back_font = Gosu::Font.new(15, name: 'src/media/fonts/Play-Regular.ttf')
-    @option_font = Gosu::Font.new(20, name: 'src/media/fonts/Play-Regular.ttf')
-    @background = Gosu::Image.new('src/media/images/options-bg.jpg',
+    @back_font = Gosu::Font.new(15, name: Path::FONTS + 'Play-Regular.ttf')
+    @option_font = Gosu::Font.new(20, name: Path::FONTS + 'Play-Regular.ttf')
+    @background = Gosu::Image.new(Path::IMAGES + 'options-bg.jpg',
                                   tileable: true)
-    @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
-    @song = Gosu::Song.new('src/media/sounds/menu.wav')
+    @option_sample = Gosu::Sample.new(Path::SOUNDS + 'menu-option.wav')
+    @song = Gosu::Song.new(Path::SOUNDS + 'menu.wav')
   end
 
   def load_options

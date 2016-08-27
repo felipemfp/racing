@@ -6,11 +6,11 @@ class ScenarioMenuState < MenuState
   end
 
   def load_assets
-    @background = Gosu::Image.new('src/media/images/scenario-bg.jpg',
+    @background = Gosu::Image.new(Path::IMAGES + 'scenario-bg.jpg',
                                   tileable: true)
-    @select = Gosu::Image.new('src/media/images/select.png')
-    @option_sample = Gosu::Sample.new('src/media/sounds/menu-option.wav')
-    @song = Gosu::Song.new('src/media/sounds/menu.wav')
+    @select = Gosu::Image.new(Path::IMAGES + 'select.png')
+    @option_sample = Gosu::Sample.new(Path::SOUNDS + 'menu-option.wav')
+    @song = Gosu::Song.new(Path::SOUNDS + 'menu.wav')
   end
 
   def draw
