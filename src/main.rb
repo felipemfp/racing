@@ -1,19 +1,23 @@
 require 'rubygems'
 require 'gosu'
 require 'json'
+
+require_relative 'utils/lang'
+
 require_relative 'models/state'
 require_relative 'models/player'
 require_relative 'models/car'
 require_relative 'models/road'
-require_relative 'utils/lang'
-require_relative 'states/menuState'
-require_relative 'states/gameState'
-require_relative 'states/scenarioState'
-require_relative 'states/oneWayGameState'
-require_relative 'states/twoWayGameState'
-require_relative 'states/highScoresState'
-require_relative 'states/garageState'
-require_relative 'states/optionsState'
+
+require_relative 'states/menu_state'
+require_relative 'states/game_state'
+require_relative 'states/scenario_state'
+require_relative 'states/highscores_state'
+require_relative 'states/garage_state'
+require_relative 'states/options_state'
+
+require_relative 'states/game_states/oneway'
+require_relative 'states/game_states/twoway'
 
 WIDTH = 512
 HEIGHT = 512
@@ -111,6 +115,7 @@ class MainWindow < Gosu::Window
     difficulty =
       @data['config']['difficulty'][@data['config']['current_difficulty']]
     {
+      difficulty: @data['config']['current_difficulty'],
       cars_wave: difficulty['cars_wave'],
       cars_move: difficulty['cars_move'],
       score_factor: difficulty['score_factor']
