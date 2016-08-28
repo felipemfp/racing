@@ -1,8 +1,9 @@
+# This class contains the Road (background) functionality.
 class Road
   attr_reader :speed
+
   def initialize(background_file)
-    @image_a = Gosu::Image.new(background_file, tileable: true)
-    @image_b = Gosu::Image.new(background_file, tileable: true)
+    @image = Gosu::Image.new(background_file, tileable: true)
     @xa = @ya = @xb = 0.0
     @yb = HEIGHT * -1
     @speed = 5.0
@@ -35,7 +36,7 @@ class Road
   end
 
   def draw
-    @image_a.draw(@xa, @ya, ZOrder::Background)
-    @image_b.draw(@xb, @yb, ZOrder::Background)
+    @image.draw(@xa, @ya, ZOrder::BACKGROUND)
+    @image.draw(@xb, @yb, ZOrder::BACKGROUND)
   end
 end

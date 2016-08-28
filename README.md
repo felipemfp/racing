@@ -1,17 +1,18 @@
-# racing
+# Racing
 
-A simple game built with Ruby and Gosu
+A simple game built with Ruby and Gosu.
 
-![Preview](https://66.media.tumblr.com/7a8665105694e3a0e9dde6f9ba6cc1d1/tumblr_o9pwcskjLN1vnlnoto1_1280.png)
+![Racing](http://i.imgur.com/AxOvTPJ.png)
 
 ## Getting Started
 
-Please, read the [wiki](https://github.com/gosu/gosu/wiki) from [gosu/gosu](https://github.com/gosu/gosu/) to the appropriate tutorial to install **gosu** on your operating system.
+Please, read the [wiki](//github.com/gosu/gosu/wiki) from [gosu/gosu](//github.com/gosu/gosu/) to the appropriate tutorial to install **gosu** on your operating system.
 
-After install **Ruby** and **Gosu**, you should be able to call `run.rb`.
+After install **Ruby** and **Gosu**, you should be able to call `racing.rb` or, if you are on Windows, just double click in `racing.exe`.
 
 ```sh
-ruby run.rb
+cd path/to/racing
+./racing.rb
 ```
 
 ## Built With
@@ -40,14 +41,14 @@ ruby run.rb
 
 ## Contributing
 
-You are very welcome for submitting pull requests to us __after August 24, 2016__.
+You are very welcome for submitting pull requests.
 
 ## Authors
 
-* **Felipe Pontes** - [felipemfp](https://github.com/felipemfp)
-* **Francisco Bento** - [chicobentojr](https://github.com/chicobentojr)
+* **Felipe Pontes** - [@felipemfp](//github.com/felipemfp)
+* **Francisco Bento** - [@chicobentojr](//github.com/chicobentojr)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](//github.com/felipemfp/racing/contributors) who participated in this project.
 
 ## License
 
