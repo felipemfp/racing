@@ -1,4 +1,4 @@
-# This class is responsible to handle the Game state.
+# This class is responsible to handle the on game behavior.
 class GameState < State
   def initialize(options = {})
     super options
@@ -104,7 +104,11 @@ class GameState < State
   end
 
   def possible_positions(angle_index)
-    @options[:cars_pos][angle_index * 2..angle_index * 2 + 1]
+    if @options[:cars_pos].size.even?
+      @options[:cars_pos][angle_index * 2..angle_index * 2 + 1]
+    else
+      @options[:cars_pos]
+    end
   end
 
   def safe_to_add_new_car?(new_car)
